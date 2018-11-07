@@ -33,4 +33,8 @@ This is the very start of this final project.
 
 ### The planned analyses / visualizations / coding challenges
 
+coding challenges: 
+
+* There is no coordinates of the exact location of the fire, so we have to use zip code or street names to visualize the incidence of fire. We currently do not know if it is easy to accomplish.
+
 ### The planned timeline
