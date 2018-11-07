@@ -61,3 +61,8 @@ Coding challenges:
 There are no coordinates of the exact location of the fire, so we have to use zip code or street names to visualize the incidence of fire. We currently do not know if it is easy to accomplish.
 
 
+### The planned timeline
+
+~Nov. 8 Write the proposal
+Nov. 9 ~ Nov. 16 Finish the preliminary work
+Nov. 17 ~ Dec. 5 Collect and clean the data, do exploratory analyses, alternative strategies, describe the approaches and discuss the results
