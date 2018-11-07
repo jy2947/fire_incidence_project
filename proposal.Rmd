@@ -25,3 +25,18 @@ But there was nothing wrong - except for an open door that should not be opened 
 Someone began wondering - how often does incidents like this happen in NYC? 
 
 This is the very start of this final project.  
+
+### The planned analyses/visualizations/coding challenges
+Planned analyses:  
+The most common causes of fire incidents. 
+The locations of the fire incidences by zip code area. 
+The respond time of the fire department by zip code area. 
+Use statistical models to analyze the factors associated with fire incidents and mortality. 
+Possibly scrap the web for news of major fire incidence and “cross-validated” with the data we have. 
+
+Visualizations: 
+Maps: The area with the most fire incidences. The area with the fastest responses from the fire department. 
+Bar chart - The most common causes of fire incidents. 
+
+Coding challenges:
+There are no coordinates of the exact location of the fire, so we have to use zip code or street names to visualize the incidence of fire. We currently do not know if it is easy to accomplish.
