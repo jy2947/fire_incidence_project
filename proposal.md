@@ -20,3 +20,12 @@ But there was nothing wrong - except for an open door that should not be opened 
 Someone began wondering - how often does incidents like this happen in NYC?
 
 This is the very start of this final project.
+
+
+### Intended final products
+
+### The anticipated data sources
+
+### The planned analyses / visualizations / coding challenges
+
+### The planned timeline
