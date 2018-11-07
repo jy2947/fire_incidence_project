@@ -3,7 +3,7 @@ Project Proposal
 
 ### Group members
 
-Jiawei Ye (jy2947), Yuxin Yang, Ruoyu Ji, Lingyu Zhang
+Jiawei Ye (jy2947), Yuxin Yang, Ruoyu Ji (rj2543), Lingyu Zhang
 
 ### Motivation
 
