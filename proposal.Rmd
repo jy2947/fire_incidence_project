@@ -10,6 +10,10 @@ knitr::opts_chunk$set(echo = TRUE)
 ###Group members
 Jiawei Ye (jy2947), Yuxin Yang, Ruoyu Ji, Lingyu Zhang
 
+### The tentative project title
+
+Factors Associated with Fire Accidents in New York City from 2015 to 2017
+
 ###Motivation
 
 The story starts on a peaceful weekend night, 100 Haven Avenue, Tower 3.  
@@ -25,6 +29,10 @@ But there was nothing wrong - except for an open door that should not be opened 
 Someone began wondering - how often does incidents like this happen in NYC? 
 
 This is the very start of this final project.  
+
+### Intended final products
+
+Our final product will be a website which contains analyses of the possible factors associated with fire incidents. The contents will include the introduction page of our project. Visualization page of mapping the Fire incident reports and the effect of different possible factors. Analysis page of final statistics model. Moreover, we intend to incorporate a screencast of background information of our project.
 
 ### The planned analyses/visualizations/coding challenges
 Planned analyses:  
