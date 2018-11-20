@@ -27,3 +27,14 @@ fire_data = read.csv(file = "data/Incidents_Responded_to_by_Fire_Companies.csv")
          floor = as.integer(floor)
          )
 ```
+
+```{r count_by_incident_type}
+# count the frequency of the incidences and list top 10
+
+fire_data %>%
+  group_by(incident_type_desc) %>%
+  summarize(count = n()) %>%
+  arrange(desc(count)) %>%
+  slice(1:10) %>%
+  knitr::kable()
+```

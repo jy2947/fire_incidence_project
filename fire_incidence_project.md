@@ -19,3 +19,27 @@ fire_data = read.csv(file = "data/Incidents_Responded_to_by_Fire_Companies.csv")
          floor = as.integer(floor)
          )
 ```
+
+``` r
+# count the frequency of the incidences and list top 10
+
+fire_data %>%
+  group_by(incident_type_desc) %>%
+  summarize(count = n()) %>%
+  arrange(desc(count)) %>%
+  slice(1:10) %>%
+  knitr::kable()
+```
+
+| incident\_type\_desc                                         |   count|
+|:-------------------------------------------------------------|-------:|
+| 300 - Rescue, EMS incident, other                            |  823378|
+| 651 - Smoke scare, odor of smoke                             |  148924|
+| 353 - Removal of victim(s) from stalled elevator             |  118264|
+| 710 - Malicious, mischievous false call, other               |  117864|
+| 522 - Water or steam leak                                    |  108893|
+| 412 - Gas leak (natural gas or LPG)                          |  108362|
+| 735A - Unwarranted alarm/defective condition of alarm system |  100500|
+| 113 - Cooking fire, confined to container                    |   87039|
+| 555 - Defective elevator, no occupants                       |   48147|
+| 736 - CO detector activation due to malfunction              |   45982|
