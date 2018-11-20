@@ -43,3 +43,16 @@ fire_data %>%
 | 113 - Cooking fire, confined to container                    |   87039|
 | 555 - Defective elevator, no occupants                       |   48147|
 | 736 - CO detector activation due to malfunction              |   45982|
+
+``` r
+# divide the incidences to 3 types and draw the barplot
+
+fire_data %>%
+  mutate(incident_type_desc = as.integer(substr(incident_type_desc, 1, 3)),
+         type = ifelse(incident_type_desc == 561 | incident_type_desc < 165, "alarm with fire",  
+                ifelse((incident_type_desc-200)*(incident_type_desc-251)<=0 | (incident_type_desc-600)*(incident_type_desc-653)<=0 | (incident_type_desc-700)*(incident_type_desc-746)<=0,"alarm without fire","service"))
+        ) %>%
+  ggplot(aes(x = type)) + geom_bar()
+```
+
+![](fire_incidence_project_files/figure-markdown_github/incident_type_barplot-1.png)
