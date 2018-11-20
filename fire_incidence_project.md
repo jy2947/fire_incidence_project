@@ -56,3 +56,17 @@ fire_data %>%
 ```
 
 ![](fire_incidence_project_files/figure-markdown_github/incident_type_barplot-1.png)
+
+``` r
+# draw the barplot of the frequency of the incidences in each hour
+
+fire_data %>%
+  mutate(incident_hour = str_c(substr(incident_date_time, 21, 22), substr(incident_date_time, 12, 13)),
+         incident_hour = ifelse(substr(incident_hour, 1, 1) == "A", as.integer(substr(incident_hour, 3, 4)) %% 12
+                                , as.integer(substr(incident_hour, 3, 4)) %% 12 + 12)
+         ) %>%
+  group_by(incident_hour) %>%
+  ggplot(aes(x = incident_hour)) + geom_bar()
+```
+
+![](fire_incidence_project_files/figure-markdown_github/incident_by_hour-1.png)
