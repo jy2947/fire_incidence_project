@@ -1,0 +1,57 @@
+---
+title: "fire_explore"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(RSocrata)
+library(tidyverse)
+library(zipcode)
+```
+
+```{r load, cache = TRUE}
+with_detail = read.socrata("https://data.cityofnewyork.us/resource/ibte-hq4u.csv")
+without_detail = read.socrata("https://data.cityofnewyork.us/resource/mhu7-c3xb.csv")
+```
+
+```{r explore}
+data("zipcode")
+zipcode = zipcode %>% 
+  rename(zip_code = zip)
+str(with_detail)
+
+sum(is.na(with_detail$incident_date_time))
+sum(is.na(without_detail$incident_datetime))
+
+dupli_with = with_detail
+dupli_without = without_detail %>% 
+                rename(incident_date_time = incident_datetime)
+
+dupli_with %>% 
+  group_by(incident_date_time) %>% 
+  summarize(n = n()) %>% 
+  arrange(desc(n))
+dupli_without %>% 
+  group_by(incident_date_time) %>% 
+  summarize(n = n()) %>% 
+  arrange(desc(n))
+
+new_full = full_join(dupli_with, dupli_without, by = "incident_date_time")
+with_cor = left_join(dupli_with, zipcode, by = "zip_code")
+
+set.seed(1)
+with_cor = with_cor %>% 
+  mutate(latitude = latitude +  rnorm(1, 0, 1),
+         longitude = longitude +  rnorm(1,0,1))
+as.character(dupli_without$starfire_incident_id[[1]])
+
+with_cor %>% 
+ggplot(aes(x = longitude, y = latitude)) +
+  geom_point(aes(color = zip_code)) +
+  theme(legend.position = "none")
+
+
+
+```
+
