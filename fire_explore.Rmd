@@ -21,13 +21,16 @@ zipcode = zipcode %>%
   rename(zip_code = zip)
 str(with_detail)
 
+##check if some incidents do not have information about incident time
 sum(is.na(with_detail$incident_date_time))
 sum(is.na(without_detail$incident_datetime))
 
+##duplicate the dataset to have an original copy
 dupli_with = with_detail
 dupli_without = without_detail %>% 
                 rename(incident_date_time = incident_datetime)
 
+#check if some incidents happen at the same time
 dupli_with %>% 
   group_by(incident_date_time) %>% 
   summarize(n = n()) %>% 
@@ -37,21 +40,44 @@ dupli_without %>%
   summarize(n = n()) %>% 
   arrange(desc(n))
 
+#join two data sets
 new_full = full_join(dupli_with, dupli_without, by = "incident_date_time")
+
+#create new nata set with coordinates
 with_cor = left_join(dupli_with, zipcode, by = "zip_code")
 
 set.seed(1)
-with_cor = with_cor %>% 
-  mutate(latitude = latitude +  rnorm(1, 0, 1),
-         longitude = longitude +  rnorm(1,0,1))
+with_cor %>% 
+  mutate(latitude = latitude + rnorm(1, 0.5, 1),
+         longitude = longitude +  rnorm(1, 0.5, 1))
+
+str(with_cor)
 as.character(dupli_without$starfire_incident_id[[1]])
 
+
+##number of incidence in each zipcode area in Manhattan
 with_cor %>% 
-ggplot(aes(x = longitude, y = latitude)) +
-  geom_point(aes(color = zip_code)) +
-  theme(legend.position = "none")
+  filter(borough_desc == "1 - Manhattan") %>% 
+  mutate(latitude = latitude +  0.0015 * rnorm(582136, 0, 1),
+         longitude = longitude +  0.0015 * rnorm(582136, 0, 1)) %>% 
+  group_by(zip_code) %>% 
+  mutate(count_in_zip = n()) %>% 
+  ggplot(aes(x = longitude, y = latitude)) +
+    geom_point(aes(color = count_in_zip), size = 0.015) +
+    theme_bw()
 
+##all cities
+with_cor %>% 
+  mutate(latitude = latitude +  0.0015 * rnorm(2277779, 0, 1),
+         longitude = longitude +  0.0015 * rnorm(2277779, 0, 1)) %>% 
+  group_by(zip_code) %>% 
+  mutate(count_in_zip = n()) %>% 
+  ggplot(aes(x = longitude, y = latitude)) +
+    geom_point(aes(color = count_in_zip), size = 0.015) +
+    theme_bw()
+```
 
+```{r }
 
 ```
 
