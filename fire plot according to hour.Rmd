@@ -1,0 +1,55 @@
+---
+title: "Count over time"
+author: "Yuxin"
+date: "2018年12月1日"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(RSocrata)
+library(tidyverse)
+
+```
+
+
+```{r}
+with_detail = read.socrata("https://data.cityofnewyork.us/resource/ibte-hq4u.csv")
+```
+
+```{r}
+analysis = with_detail %>%
+  janitor::clean_names() %>%
+  separate(arrival_date_time, into = c("date", "time"), sep = " ") %>%
+  separate(date, into = c("year", "month", "date"), sep = "-") %>%
+  separate(time, into = c("hour", "minute", "second"), sep = ":") %>%
+  separate(borough_desc, into = c("code", "city", sep = " - ")) %>%
+  separate(incident_type_desc, into = c("index", "description", sep = " - ")) %>%
+  mutate(year = as.integer(year), month = as.integer(month), date = as.integer(date), hour = as.integer(hour), minute = as.integer(minute), second = as.integer(second), index = as.integer(index)) %>%
+  filter(index < 200 & index >99)
+```
+
+```{r}
+analysis_adj = analysis %>%
+   mutate(month = str_replace(month, "3", "Spring"),
+          month = str_replace(month, "4", "Spring"),
+          month = str_replace(month, "5", "Spring"),
+          month = str_replace(month, "6", "Summer"),
+          month = str_replace(month, "7", "Summer"),
+          month = str_replace(month, "8", "Summer"),
+          month = str_replace(month, "9", "Autumn"),
+          month = str_replace(month, "10", "Autumn"),
+          month = str_replace(month, "11", "Autumn"),
+          month = str_replace(month, "12", "Winter"),
+          month = str_replace(month, "1", "Winter"),
+          month = str_replace(month, "2", "Winter"),
+          month = fct_relevel(month, "Spring"))
+```
+
+```{r}
+analysis %>%
+  group_by(hour,city) %>%
+  summarize(n= n()) %>%
+ggplot(aes(x = hour, y = n, color = city))+
+  geom_smooth(se = FALSE)+
+  labs(title = "Number of Fire incident according to hours")
+```
