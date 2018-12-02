@@ -77,39 +77,26 @@ with_cor %>%
     theme_bw()
 ```
 
-```{r try_zip}
+```{r zipcode_map}
 install_github('arilamstein/choroplethrZip@v1.3.0')
 library(choroplethrZip)
 
-##do not use following
-data("df_pop_zip")
-zip_choropleth(df_pop_zip, 
-               state_zoom = "new york", 
-               title      = "2012 ZCTA Population Estimates",
-               legend     = "Population") + coord_map()  
+zip_map_data = 
+  dupli_with %>% 
+  group_by(zip_code) %>% 
+  summarise(value = n()) %>% 
+  slice(2:181) %>% 
+  filter(zip_code !="10691" & zip_code != "11209-0000" &zip_code != "11251") %>% 
+  rename(region = zip_code)
 
-##https://thedhrelay.wordpress.com/2014/04/08/creating-a-density-map-in-r-with-zipcodes/
-##cannot load get_map
-##https://stackoverflow.com/questions/19827598/error-in-get-map-using-ggmap-in-r to creat project
-library(ggmap)
-map = get_map(location = c(40, -73),zoom = 10, maptype = 'roadmap')
+zip_map_data %>% 
+ggplot(aes(x = value)) +
+  geom_histogram()
 
-##http://www.kevjohnson.org/making-maps-in-r/
-##it does not seem to have zip code data...?
+zip_choropleth(zip_map_data, 
+               zip_zoom = zip_map_data$region, 
+               title      = "Fire alarm incidence in New York",
+               legend     = "Fire count") + coord_map()  
 
-##NEW package to try
-library(USAboundariesData)
-library(USAboundaries)
-us_zipcode = us_zipcodes()
-
-##readShapeSpatial is deprecated
-library(maptools)
-
-##
-library(tigris)
-options(tigris_use_cache = FALSE)
-tigris_cache_dir("./data")
-readRenviron('~/.Renviron')
-zctas(start_with = c("11", "10"))
 ```
 
