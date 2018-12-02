@@ -9,9 +9,7 @@ output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
-library(dplyr)
 ```
 
 ```{r read_data}
@@ -41,22 +39,41 @@ fire_factor1 = fire_data %>%
   summarize(count = n()) %>%
   arrange(desc(count)) %>%
   ungroup() %>% 
-  separate(incident_type_desc, into = c("remove", "incident_type_desc"), sep = "-") %>% 
-  mutate(incident_type_desc = forcats::fct_reorder(incident_type_desc, count))
-  
+  separate(incident_type_desc, into = c("incident_type", "incident_desc"), sep = "-") %>% 
+  mutate(incident_type = as.integer(incident_type),
+    incident_desc = forcats::fct_reorder(incident_desc, count))
 
 fire_factor1 %>%
   filter(count > 10000) %>%
-  select(-remove) %>% 
+  select(-incident_type) %>% 
   knitr::kable()
 
 fire_factor1 %>%
   filter(count > 10000) %>% 
-  ggplot(aes(x = incident_type_desc, y = count)) +
+  ggplot(aes(x = incident_desc, y = count)) +
   geom_col() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 9)) +
   labs(title = "Frequency for Contributing Factors of Fire Incidents",
        x = "Contributing Factors",
        y = "Frequency",
        caption = "Data provided by Fire Department of New York City (FDNY)")
+
+fire_factor1 %>%
+  filter(incident_type >= 100 & incident_type <=199 | incident_type == 561) %>% 
+ # filter(count > 10000) %>%
+  select(-incident_type) %>% 
+  knitr::kable()
+
+fire_factor1 %>%
+  filter(incident_type >= 100 & incident_type <=199 | incident_type == 561) %>% 
+  filter(count > 100) %>% 
+  ggplot(aes(x = incident_desc, y = count)) +
+  geom_col() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 9)) +
+  labs(title = "Frequency for Contributing Factors of True Fire Alarm",
+       x = "Contributing Factors",
+       y = "Frequency",
+       caption = "Data provided by Fire Department of New York City (FDNY)")
+
+
 ```

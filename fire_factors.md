@@ -28,21 +28,25 @@ fire_factor1 = fire_data %>%
   summarize(count = n()) %>%
   arrange(desc(count)) %>%
   ungroup() %>% 
-  separate(incident_type_desc, into = c("remove", "incident_type_desc"), sep = "-") %>% 
-  mutate(incident_type_desc = forcats::fct_reorder(incident_type_desc, count))
+  separate(incident_type_desc, into = c("incident_type", "incident_desc"), sep = "-") %>% 
+  mutate(incident_type = as.integer(incident_type),
+    incident_desc = forcats::fct_reorder(incident_desc, count))
 ```
 
     ## Warning: Expected 2 pieces. Additional pieces discarded in 13 rows [19, 22,
     ## 44, 81, 82, 85, 89, 91, 108, 134, 141, 154, 178].
 
+    ## Warning in evalq(as.integer(incident_type), <environment>): NAs introduced
+    ## by coercion
+
 ``` r
 fire_factor1 %>%
   filter(count > 10000) %>%
-  select(-remove) %>% 
+  select(-incident_type) %>% 
   knitr::kable()
 ```
 
-| incident\_type\_desc                                  |   count|
+| incident\_desc                                        |   count|
 |:------------------------------------------------------|-------:|
 | Rescue, EMS incident, other                           |  823378|
 | Smoke scare, odor of smoke                            |  148924|
@@ -76,7 +80,7 @@ fire_factor1 %>%
 ``` r
 fire_factor1 %>%
   filter(count > 10000) %>% 
-  ggplot(aes(x = incident_type_desc, y = count)) +
+  ggplot(aes(x = incident_desc, y = count)) +
   geom_col() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 9)) +
   labs(title = "Frequency for Contributing Factors of Fire Incidents",
@@ -86,3 +90,69 @@ fire_factor1 %>%
 ```
 
 ![](fire_factors_files/figure-markdown_github/count_by_incident_type-1.png)
+
+``` r
+fire_factor1 %>%
+  filter(incident_type >= 100 & incident_type <=199 | incident_type == 561) %>% 
+ # filter(count > 10000) %>%
+  select(-incident_type) %>% 
+  knitr::kable()
+```
+
+| incident\_desc                                     |  count|
+|:---------------------------------------------------|------:|
+| Cooking fire, confined to container                |  87039|
+| Outside rubbish, trash or waste fire               |  28130|
+| Building fire                                      |  13089|
+| Trash or rubbish fire, contained                   |  10451|
+| Fuel burner/boiler malfunction, fire confined      |   9672|
+| Passenger vehicle fire                             |   8985|
+| Fire, other                                        |   8196|
+| Fires in structure other than in a building        |   6092|
+| Brush or brush                                     |   4516|
+| Commercial Compactor fire, confined to rubbish     |   2485|
+| Outside rubbish fire, other                        |   1237|
+| Road freight or transport vehicle fire             |    949|
+| Mobile property (vehicle) fire, other              |    398|
+| Special outside fire, other                        |    316|
+| Chimney or flue fire, confined to chimney or flue  |    226|
+| Incinerator overload or malfunction, fire confined |    207|
+| Outside equipment fire                             |    181|
+| Rail vehicle fire                                  |    128|
+| Dumpster or other outside trash receptacle fire    |     94|
+| Natural vegetation fire, other                     |     72|
+| Water vehicle fire                                 |     58|
+| Forest, woods or wildland fire                     |     46|
+| Grass fire                                         |     36|
+| Outside storage fire                               |     33|
+| Outside gas or vapor combustion explosion          |     25|
+| Outside mailbox fire                               |     23|
+| Off                                                |     22|
+| Unauthorized burning                               |     18|
+| Fire in mobile prop. used as a fixed struc., other |     17|
+| Fire in portable building, fixed location          |     14|
+| Construction or demolition landfill fire           |     12|
+| Garbage dump or sanitary landfill fire             |      7|
+| Fire in motor home, camper, recreational vehicle   |      5|
+| Outside stationary compactor/compacted trash fire  |      4|
+| Fire in mobile home used as fixed residence        |      3|
+| Aircraft fire                                      |      3|
+| Self                                               |      2|
+| Cultivated vegetation, crop fire, other            |      2|
+| Cultivated trees or nursery stock fire             |      2|
+| Cultivated orchard or vineyard fire                |      1|
+
+``` r
+fire_factor1 %>%
+  filter(incident_type >= 100 & incident_type <=199 | incident_type == 561) %>% 
+  filter(count > 100) %>% 
+  ggplot(aes(x = incident_desc, y = count)) +
+  geom_col() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 9)) +
+  labs(title = "Frequency for Contributing Factors of True Fire Alarm",
+       x = "Contributing Factors",
+       y = "Frequency",
+       caption = "Data provided by Fire Department of New York City (FDNY)")
+```
+
+![](fire_factors_files/figure-markdown_github/count_by_incident_type-2.png)
