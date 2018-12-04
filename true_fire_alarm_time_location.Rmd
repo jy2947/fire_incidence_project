@@ -1,0 +1,31 @@
+---
+title: "true_fire_alarm_time_location"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(RSocrata)
+library(tidyverse)
+```
+
+```{r load, cache = TRUE}
+with_detail = read.socrata("https://data.cityofnewyork.us/resource/ibte-hq4u.csv")
+```
+
+
+```{r fire_location_plot}
+true_fire = with_detail %>%
+  filter(as.integer(substr(incident_type_desc, 1, 3)) == 561 | as.integer(substr(incident_type_desc, 1, 3)) < 165) %>%
+  mutate(month = as.factor(month.abb[as.integer(substr(incident_date_time, 6, 7))]),
+         month = fct_relevel(month, "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
+         borough_desc = substr(borough_desc, 5, 20)) %>%
+  group_by(borough_desc, month) %>%
+  summarize(n = n())
+
+  ggplot(true_fire, aes(x = month, y = n, color = borough_desc, group = borough_desc)) + 
+    geom_point() + 
+    geom_line() +
+    labs(title = "Number of True Fire Alarm in Each Borough")
+```
+
+
