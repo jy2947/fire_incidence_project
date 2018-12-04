@@ -77,7 +77,26 @@ with_cor %>%
     theme_bw()
 ```
 
-```{r }
+```{r zipcode_map}
+install_github('arilamstein/choroplethrZip@v1.3.0')
+library(choroplethrZip)
+
+zip_map_data = 
+  dupli_with %>% 
+  group_by(zip_code) %>% 
+  summarise(value = n()) %>% 
+  slice(2:181) %>% 
+  filter(zip_code !="10691" & zip_code != "11209-0000" &zip_code != "11251") %>% 
+  rename(region = zip_code)
+
+zip_map_data %>% 
+ggplot(aes(x = value)) +
+  geom_histogram()
+
+zip_choropleth(zip_map_data, 
+               zip_zoom = zip_map_data$region, 
+               title      = "Fire alarm incidence in New York",
+               legend     = "Fire count") + coord_map()  
 
 ```
 
