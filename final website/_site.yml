@@ -1,0 +1,22 @@
+name: "Yay internet!"
+output_dir: "."
+navbar:
+  title: "Home"
+  left:
+    - text: "Fire incident Analysis"
+      href: Fire_incident_Analysis.html
+    - text: "Contributing Factor"
+      href: Contributing_Factor_Analysis.html
+    - text: "Location"
+      href: Location.html
+    - text: "Population"
+      href: Population.html
+  right:    
+    - icon: fa-envelope fa-lg
+      href: mailto:<you@youremail.com>
+    - icon: fa-github fa-lg
+      href: https://github.com/jy2947/fire_incidence_project
+    - text: "Shinny"
+      href: https://github.com/jy2947/fire_incidence_project
+output:
+  html_document
