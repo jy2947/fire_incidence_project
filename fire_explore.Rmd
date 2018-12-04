@@ -47,11 +47,6 @@ new_full = full_join(dupli_with, dupli_without, by = "incident_date_time")
 with_cor = left_join(dupli_with, zipcode, by = "zip_code")
 
 set.seed(1)
-with_cor %>% 
-  mutate(latitude = latitude + rnorm(1, 0.5, 1),
-         longitude = longitude +  rnorm(1, 0.5, 1))
-
-str(with_cor)
 as.character(dupli_without$starfire_incident_id[[1]])
 
 
@@ -96,7 +91,7 @@ ggplot(aes(x = value)) +
 zip_choropleth(zip_map_data, 
                zip_zoom = zip_map_data$region, 
                title      = "Fire alarm incidence in New York",
-               legend     = "Fire count") + coord_map()  
+               legend     = "Fire count") + coord_map()
 
 ```
 
