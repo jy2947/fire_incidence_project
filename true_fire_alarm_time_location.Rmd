@@ -1,5 +1,7 @@
 ---
 title: "true_fire_alarm_time_location"
+author: lz2657
+date: Nov.30, 2018
 output: html_document
 ---
 ```{r setup, include=FALSE}
