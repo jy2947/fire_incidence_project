@@ -1,6 +1,6 @@
 ---
 title: "fire_map"
-output: github_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -8,6 +8,8 @@ knitr::opts_chunk$set(echo = TRUE)
 library(RSocrata)
 library(tidyverse)
 library(choroplethrZip)
+library(patchwork)
+library(scales)
 ```
 
 ```{r load, cache = TRUE}
@@ -28,10 +30,9 @@ dupli_with = with_detail %>%
 zip_map_data = 
   dupli_with %>% 
   mutate(zip_code = str_sub(zip_code, 1, 5)) %>% 
-  filter(zip_code != "" & zip_code != "99999" & zip_code != "10691" & 
+  filter(zip_code != "" & zip_code != "99999" & 
          zip_code != "10691" & zip_code != "11251") %>% 
-  rename(region = zip_code)
-
+  rename(region = zip_code) 
 ```
 
 ###map for all alarm causes
@@ -42,9 +43,10 @@ zip_map_data_for_map =
   group_by(region) %>% 
   summarize(value = n())
 
-zip_choropleth(zip_map_data_for_map,
+all_alarm_ny = 
+  zip_choropleth(zip_map_data_for_map,
                zip_zoom = zip_map_data_for_map$region, 
-               title      = "Fire alarm incidence in New York",
+               title      = "Fire alarm incidence in New York, 2013-2017",
                legend     = "count") + 
   coord_map()
 ```
@@ -57,9 +59,10 @@ zip_map_data_for_map =
   group_by(region) %>% 
   summarize(value = n()) 
 
-zip_choropleth(zip_map_data_for_map,
+all_alarm_manha = 
+  zip_choropleth(zip_map_data_for_map,
                zip_zoom = zip_map_data_for_map$region, 
-               title      = "Fire alarm incidence in Manhattan",
+               title      = "Fire alarm incidence in Manhattan, 2013-2017",
                legend     = "count") + coord_map()
 ```
 
@@ -71,9 +74,10 @@ zip_map_data_for_map =
   group_by(region) %>% 
   summarize(value = n())
 
+fire_ny = 
 zip_choropleth(zip_map_data_for_map,
                zip_zoom = zip_map_data_for_map$region, 
-               title      = "Fire alarm incidence in Manhattan",
+               title      = "Fire incidence in New York, 2013-2017",
                legend     = "count") + coord_map()
 ```
 
@@ -85,8 +89,17 @@ zip_map_data_for_map =
   group_by(region) %>% 
   summarize(value = n())
 
-zip_choropleth(zip_map_data_for_map,
-               zip_zoom = zip_map_data_for_map$region, 
-               title      = "Fire alarm incidence in Manhattan",
-               legend     = "count") + coord_map()
+fire_manha = 
+  zip_choropleth(zip_map_data_for_map,
+                 zip_zoom = zip_map_data_for_map$region, 
+                 title      = "Fire incidence in Manhattan, 2013-2017",
+                 legend     = "count") + coord_map()
 ```
+
+###Put graphs together
+```{r graphs_together}
+fire_manha + all_alarm_manha
+
+fire_ny + all_alarm_ny
+```
+
