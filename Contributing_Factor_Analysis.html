@@ -19,9 +19,6 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -172,101 +169,6 @@ $(document).ready(function () {
 
 
 
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
-
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
-
-
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -288,15 +190,15 @@ div.tocify {
   <a href="Contributing_Factor_Analysis.html">Contributing Factor</a>
 </li>
 <li>
-  <a href="Location.html">Location</a>
+  <a href="fire_map.html">Location</a>
 </li>
 <li>
-  <a href="Population.html">Population</a>
+  <a href="regression.html">Population</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="mailto:&lt;you@youremail.com&gt;">
+  <a href="mailto:&lt;jy2947@cumc.columbia.com&gt;">
     <span class="fa fa-envelope fa-lg"></span>
      
   </a>
@@ -308,7 +210,7 @@ div.tocify {
   </a>
 </li>
 <li>
-  <a href="https://github.com/jy2947/fire_incidence_project">Shinny</a>
+  <a href="https://lz2657.shinyapps.io/shiny/">Shiny</a>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -327,100 +229,17 @@ div.tocify {
 <div id="counts-of-contributing-factors" class="section level3">
 <h3>Counts of Contributing Factors</h3>
 <p>We derive contributing factors from the “incident_type_desc” variable in the original dataset and filter out factors related to true fire alarms to make analysis more readily interpretable. And since our dataset is quite large in size, the table below only includes counts that are over 100.</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">factor</th>
-<th align="right">count</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Cooking fire, confined to container</td>
-<td align="right">87039</td>
-</tr>
-<tr class="even">
-<td align="left">Outside rubbish, trash or waste fire</td>
-<td align="right">28130</td>
-</tr>
-<tr class="odd">
-<td align="left">Building fire</td>
-<td align="right">13089</td>
-</tr>
-<tr class="even">
-<td align="left">Trash or rubbish fire, contained</td>
-<td align="right">10451</td>
-</tr>
-<tr class="odd">
-<td align="left">Fuel burner/boiler malfunction, fire confined</td>
-<td align="right">9672</td>
-</tr>
-<tr class="even">
-<td align="left">Passenger vehicle fire</td>
-<td align="right">8985</td>
-</tr>
-<tr class="odd">
-<td align="left">Fire, other</td>
-<td align="right">8196</td>
-</tr>
-<tr class="even">
-<td align="left">Fires in structure other than in a building</td>
-<td align="right">6092</td>
-</tr>
-<tr class="odd">
-<td align="left">Brush or brush</td>
-<td align="right">4516</td>
-</tr>
-<tr class="even">
-<td align="left">Commercial Compactor fire, confined to rubbish</td>
-<td align="right">2485</td>
-</tr>
-<tr class="odd">
-<td align="left">Outside rubbish fire, other</td>
-<td align="right">1237</td>
-</tr>
-<tr class="even">
-<td align="left">Road freight or transport vehicle fire</td>
-<td align="right">949</td>
-</tr>
-<tr class="odd">
-<td align="left">Mobile property (vehicle) fire, other</td>
-<td align="right">398</td>
-</tr>
-<tr class="even">
-<td align="left">Special outside fire, other</td>
-<td align="right">316</td>
-</tr>
-<tr class="odd">
-<td align="left">Chimney or flue fire, confined to chimney or flue</td>
-<td align="right">226</td>
-</tr>
-<tr class="even">
-<td align="left">Incinerator overload or malfunction, fire confined</td>
-<td align="right">207</td>
-</tr>
-<tr class="odd">
-<td align="left">Outside equipment fire</td>
-<td align="right">181</td>
-</tr>
-<tr class="even">
-<td align="left">Rail vehicle fire</td>
-<td align="right">128</td>
-</tr>
-</tbody>
-</table>
+<p><img src="./images/factor_table.jpg" style="width:100%" ></p>
 </div>
 <div id="barplot-of-contributing-factors" class="section level3">
 <h3>Barplot of Contributing Factors</h3>
 <p>Also, we can make the barplot for those factor counts, which may convey information more directly.</p>
-<p><img src="Contributing_Factor_Analysis_files/figure-html/plot%20by%20incident%20type-1.png" width="672" /></p>
+<p><img src="./images/factor_plot.png" style="width:100%" ></p>
 <p>From the plot, we can see that the most common contributing factor for true fire alarms is “cooking fire, confined to container”. Its count is 3 times more than that of the second factor “outside rubbish, trash or waste fire”. Despite those two, factors like “building fire” and “trash or rubbish fire, contained” are frequently reported as well.</p>
 </div>
 
 
 
-</div>
-</div>
 
 </div>
 

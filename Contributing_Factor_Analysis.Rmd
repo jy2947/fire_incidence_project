@@ -1,9 +1,5 @@
 ---
 title: "Contributing Factor Analysis"
-output:
-  html_document: 
-    toc: true
-    toc_float: true
 ---
 
 ### Counts of Contributing Factors
