@@ -95,3 +95,10 @@ zip_choropleth(zip_map_data,
 
 ```
 
+```{r explore_property_use} 
+dupli_with %>% 
+  group_by(property_use_desc) %>% 
+  summarise(count = n()) %>% 
+  arrange(desc(count)) %>% View()
+```
+

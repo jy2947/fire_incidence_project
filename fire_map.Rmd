@@ -3,7 +3,7 @@ title: "Fire alarm distribution in New York"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
+knitr::opts_chunk$set(include = FALSE, warning = FALSE)
 library(RSocrata)
 library(tidyverse)
 library(choroplethrZip)
@@ -47,7 +47,6 @@ all_alarm_ny =
                title      = "Fire alarm in New York, 2013-2017",
                legend     = "count") + 
   coord_map()
-ggplotly(all_alarm_ny)
 ```
 
 ```{r map_manha}
