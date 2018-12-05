@@ -10,7 +10,7 @@ We can observe from the plot that the peak of the highest number of fire inciden
 
 Similarly,  we plot a distribution of the number of fire incidents according to hours for each borough.  The plot indicates that most fire incidents happened in the afternoon.  
 
-<img src="./unnamed-chunk-2-1.png" style="width:75%" >
+<img src="./unnamed-chunk-4-1" style="width:75%" >
 
 From visualization, we detect that the number of the fire incident vary distinctively among different hours and seasons. We will do a further statistical test to see if there is any relationship between season and a total number of fire incidents.
 
