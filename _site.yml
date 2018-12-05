@@ -3,7 +3,7 @@ output_dir: "."
 navbar:
   title: "Home"
   left:
-    - text: "Fire incident Analysis"
+    - text: "Fire Incident Analysis"
       href: Fire_incident_Analysis.html
     - text: "Contributing Factor"
       href: Contributing_Factor_Analysis.html
@@ -16,7 +16,9 @@ navbar:
       href: mailto:<jy2947@cumc.columbia.com>
     - icon: fa-github fa-lg
       href: https://github.com/jy2947/fire_incidence_project
-    - text: "Shinny"
+    - text: "Shiny"
       href: https://github.com/jy2947/fire_incidence_project
 output:
-  html_document
+    html_document:
+    toc: true
+    toc_float: true
