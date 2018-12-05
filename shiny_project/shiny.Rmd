@@ -1,0 +1,99 @@
+---
+title: "fire_incidence_dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: row
+runtime: shiny
+---
+
+```{r steup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(stringr)
+library(shiny)
+library(plotly)
+library(devtools)
+install_github('arilamstein/choroplethrZip@v1.5.0')
+library(choroplethrZip)
+```
+
+```{r read_and_tidy}
+fire_data = read.csv(file = "data/fire_data_tidy.csv")
+
+zip_map_data = 
+  fire_data %>% 
+  mutate(zip_code = str_sub(zip_code, 1, 5)) %>% 
+  filter(zip_code != "" & zip_code != "99999" & zip_code != "10691" & 
+         zip_code != "11251" & zip_code != "11209" & incident_type < 165) %>% 
+  rename(region = zip_code)
+```
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+boros = zip_map_data %>% distinct(borough) %>% pull() %>% str_to_title()
+
+# selectInput widget
+selectInput("boro_choice", label = h3("Select boro"),
+            choices = boros, selected = "Manhattan")
+
+max_fire = 831
+min_fire = 0
+  
+# sliderInput widget
+  sliderInput("fire_range", label = h3("Choose fire number range"), min = min_fire, 
+        max = max_fire, value = c(min_fire, max_fire))
+
+season = zip_map_data %>% distinct(month) %>% pull() 
+
+# radioButtons widget
+radioButtons("season_choice", label = h3("Choose season"),
+    choices = season, selected = "Winter")
+```
+
+
+Row
+-----------------------------------------------------------------------
+
+### Numbers of true fire by location
+
+```{r}
+renderPlot({
+zip_map_data_for_map = 
+  zip_map_data %>% 
+  filter(borough == input$boro_choice,
+         month == input$season_choice
+        ) %>%  
+  group_by(region) %>% 
+  summarize(value = n()) %>%
+  mutate(value = ifelse(value %in% input$fire_range[1]:input$fire_range[2], value, 0))
+         
+zip_choropleth(zip_map_data_for_map,
+               zip_zoom = zip_map_data_for_map$region, 
+               title      = "Fire alarm incidence",
+               legend     = "count") + coord_map()
+})
+```
+
+Row {.tabset .tabset-fade}
+-----------------------------------------------------------------------
+
+### Number of true fire in each hour
+
+```{r}
+renderPlotly({
+fire_hour <- fire_data %>% 
+  filter(borough == input$boro_choice,
+         month == input$season_choice
+        ) 
+
+fire_hour %>%
+  group_by(incident_hour) %>%
+  summarize(n = n()) %>%
+  plot_ly(x = ~incident_hour, y = ~n, type = "bar", 
+          alpha = 0.6, 
+          color = ~ factor(incident_hour), 
+          colors = "Paired")
+})
+```

@@ -25,7 +25,6 @@ true_fire = with_detail %>%
   summarize(n = n())
 
   ggplot(true_fire, aes(x = month, y = n, color = borough_desc, group = borough_desc)) + 
-    geom_point() + 
     geom_line() +
     labs(title = "Number of True Fire Alarm in Each Borough")
 ```
