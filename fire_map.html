@@ -11,7 +11,7 @@
 
 
 
-<title>fire_map</title>
+<title>Fire alarm distribution in New York</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,6 +22,13 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.8.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.39.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.39.2/plotly-latest.min.js"></script>
 <link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
 <script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
 <script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
@@ -221,94 +228,17 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">fire_map</h1>
+<h1 class="title toc-ignore">Fire alarm distribution in New York</h1>
 
 </div>
 
 
-<pre class="r"><code>with_detail = read.socrata(&quot;https://data.cityofnewyork.us/resource/ibte-hq4u.csv&quot;)</code></pre>
-<pre class="r"><code>#tidy data for zip code map
-dupli_with = with_detail %&gt;% 
-  select(incident_date_time, incident_type_desc, 
-         property_use_desc, zip_code, borough_desc) %&gt;% 
-  separate(borough_desc, sep = &quot;- &quot;, into = c(&quot;n&quot;, &quot;borough&quot;)) %&gt;% 
-  select(-n) %&gt;% 
-  separate(incident_type_desc, into = c(&quot;incident_type&quot;, &quot;incident_desc&quot;), sep = &quot;- &quot;) %&gt;% 
-  mutate(incident_type = str_sub(incident_type, 1, 3), 
-         incident_type = as.integer(incident_type))</code></pre>
-<pre><code>## Warning: Expected 2 pieces. Additional pieces discarded in 914 rows [3472,
-## 7257, 10510, 14519, 17735, 22456, 24900, 24904, 25203, 26583, 27950, 30180,
-## 31089, 37530, 38893, 41521, 51384, 51596, 54277, 59991, ...].</code></pre>
-<pre class="r"><code>zip_map_data = 
-  dupli_with %&gt;% 
-  mutate(zip_code = str_sub(zip_code, 1, 5)) %&gt;% 
-  filter(zip_code != &quot;&quot; &amp; zip_code != &quot;99999&quot; &amp; 
-         zip_code != &quot;10691&quot; &amp; zip_code != &quot;11251&quot;) %&gt;% 
-  rename(region = zip_code) </code></pre>
-<div id="map-for-all-alarm-causes" class="section level3">
-<h3>map for all alarm causes</h3>
-<pre class="r"><code>#prepare a data frame for zip code map
-zip_map_data_for_map = 
-  zip_map_data %&gt;% 
-  group_by(region) %&gt;% 
-  summarize(value = n())
-
-all_alarm_ny = 
-  zip_choropleth(zip_map_data_for_map,
-               zip_zoom = zip_map_data_for_map$region, 
-               title      = &quot;Fire alarm incidence in New York, 2013-2017&quot;,
-               legend     = &quot;count&quot;) + 
-  coord_map()</code></pre>
-<pre><code>## Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
-<pre class="r"><code>#prepare a data frame for zip code map, manhattan only
-zip_map_data_for_map = 
-  zip_map_data %&gt;% 
-  filter(borough == &quot;Manhattan&quot;) %&gt;% 
-  group_by(region) %&gt;% 
-  summarize(value = n()) 
-
-all_alarm_manha = 
-  zip_choropleth(zip_map_data_for_map,
-               zip_zoom = zip_map_data_for_map$region, 
-               title      = &quot;Fire alarm incidence in Manhattan, 2013-2017&quot;,
-               legend     = &quot;count&quot;) + coord_map()</code></pre>
-<pre><code>## Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
-</div>
-<div id="map-for-alarms-caused-by-fire" class="section level3">
-<h3>Map for alarms caused by fire</h3>
-<pre class="r"><code>zip_map_data_for_map = 
-  zip_map_data %&gt;% 
-  filter(incident_type &lt; 165) %&gt;% 
-  group_by(region) %&gt;% 
-  summarize(value = n())
-
-fire_ny = 
-zip_choropleth(zip_map_data_for_map,
-               zip_zoom = zip_map_data_for_map$region, 
-               title      = &quot;Fire incidence in New York, 2013-2017&quot;,
-               legend     = &quot;count&quot;) + coord_map()</code></pre>
-<pre><code>## Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
-<pre class="r"><code>zip_map_data_for_map = 
-  zip_map_data %&gt;% 
-  filter(incident_type &lt; 165, 
-         borough == &quot;Manhattan&quot;) %&gt;% 
-  group_by(region) %&gt;% 
-  summarize(value = n())
-
-fire_manha = 
-  zip_choropleth(zip_map_data_for_map,
-                 zip_zoom = zip_map_data_for_map$region, 
-                 title      = &quot;Fire incidence in Manhattan, 2013-2017&quot;,
-                 legend     = &quot;count&quot;) + coord_map()</code></pre>
-<pre><code>## Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
-</div>
-<div id="put-graphs-together" class="section level3">
-<h3>Put graphs together</h3>
-<pre class="r"><code>fire_manha + all_alarm_manha</code></pre>
-<p><img src="fire_map_files/figure-html/graphs_together-1.png" width="672" /></p>
-<pre class="r"><code>fire_ny + all_alarm_ny</code></pre>
-<p><img src="fire_map_files/figure-html/graphs_together-2.png" width="672" /></p>
-</div>
+<p>In order to visualize areas where fire alarms happens the most and areas where fire alarms are less likely to happen, the following maps are made. Each polygon represents a zip code area, and places with the darkest color has the most fire alarm and true fire cases.</p>
+<p><img src="fire_map_files/figure-html/graphs_together_manha-1.png" style="width:100%" ></p>
+<p>In manhattan, it seems fire alarms happens the most at upper west side, morningside heights, east harlem, lower east side and east villiage, regardless of the alarm type - be it a service request to the fire department or the place really caught on fire. The places in the most north part in manhattan, the most south part as well as upper east side have relatively fewer fire alarms and true fire cases.</p>
+<p><img src="fire_map_files/figure-html/garphs_toge_all_ny-1.png" style="width:100%" ></p>
+<p>In New York City, queens seems to be a place with less fire alarms and true fire case. But if you live in Brooklyn, you’d better be more careful and avoid being caught in fire.</p>
+<p>Overall, if you are trying to find a place to live in New York City where it is less likely to caught on fire, it would be a good idea to find a place in the most north part, or the financial district in Manhattan. Queens might also be a good place.</p>
 
 
 
