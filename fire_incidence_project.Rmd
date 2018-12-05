@@ -9,6 +9,11 @@ library(tidyverse)
 library(dplyr)
 ```
 
+```{r}
+fire_data_test = read.csv("./data/Fire_Incident_Dispatch_Data.csv")
+```
+
+
 ```{r read_data}
 # turn the factor variables with one level to character or integer
 

@@ -9,7 +9,6 @@ library(RSocrata)
 library(tidyverse)
 library(choroplethrZip)
 library(patchwork)
-library(scales)
 ```
 
 ```{r load, cache = TRUE}
@@ -70,7 +69,7 @@ all_alarm_manha =
 ```{r all_borough}
 zip_map_data_for_map = 
   zip_map_data %>% 
-  filter(incident_type < 164) %>% 
+  filter(incident_type < 165) %>% 
   group_by(region) %>% 
   summarize(value = n())
 
@@ -84,7 +83,7 @@ zip_choropleth(zip_map_data_for_map,
 ```{r manha_tru_fire}
 zip_map_data_for_map = 
   zip_map_data %>% 
-  filter(incident_type < 164, 
+  filter(incident_type < 165, 
          borough == "Manhattan") %>% 
   group_by(region) %>% 
   summarize(value = n())

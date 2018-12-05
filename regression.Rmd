@@ -41,7 +41,7 @@ reg_prep =
   mutate(zip_code = str_sub(zip_code, 1, 5)) %>% 
   filter(zip_code != "" & zip_code != "99999" & 
          zip_code != "10691" & zip_code != "11251", 
-         incident_type < 164, 
+         incident_type < 165, 
          year == "2013") %>% 
   group_by(zip_code, season) %>% 
   summarize(true_fire = n())
