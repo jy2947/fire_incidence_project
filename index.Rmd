@@ -2,10 +2,6 @@
 title: "Factors Associated with Fire Accidents in New York City from 2013 to 2017"
 author: "Jiawei Ye, Yuxin Yang, Ruoyu Ji, Lingyu Zhang"
 date: "December, 2018"
-output:
-  html_document: 
-    toc: true
-    toc_float: true
 ---
 
 <img src="images/FDNY_LEGO2.jpg" style="width:100%">
