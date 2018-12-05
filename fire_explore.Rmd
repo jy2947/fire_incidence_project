@@ -12,7 +12,7 @@ library(zipcode)
 
 ```{r load, cache = TRUE}
 with_detail = read.socrata("https://data.cityofnewyork.us/resource/ibte-hq4u.csv")
-without_detail = read.socrata("https://data.cityofnewyork.us/resource/mhu7-c3xb.csv")
+#without_detail = read.socrata("https://data.cityofnewyork.us/resource/mhu7-c3xb.csv")
 ```
 
 ```{r explore}

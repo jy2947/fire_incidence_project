@@ -1,0 +1,64 @@
+---
+title: "regression"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(choroplethrZip)
+library(RSocrata)
+```
+
+
+```{r load, cache = TRUE}
+with_detail = read.socrata("https://data.cityofnewyork.us/resource/ibte-hq4u.csv")
+```
+
+```{r tidy_data}
+reg_prep = 
+  with_detail %>% 
+  select(incident_date_time, incident_type_desc, 
+         property_use_desc, zip_code, borough_desc) %>% 
+  #get a clean borough variable
+  separate(borough_desc, sep = "- ", into = c("n", "borough")) %>% 
+  select(-n) %>% 
+  #make it easier to filter true fire alarms
+  separate(incident_type_desc, into = c("incident_type", "incident_desc"), sep = "- ") %>%
+  mutate(incident_type = as.integer(incident_type)) %>% 
+  #clean year and month
+  mutate(month = as.factor(month.abb[as.integer(substr(incident_date_time, 6, 7))]),
+         month = fct_relevel(month, "Jan", "Feb", "Mar", "Apr", "May", 
+                             "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"), 
+         year = str_sub(incident_date_time, 1, 4)) %>% 
+  #get a season variable. I can't believe I'm using this ugly if_else
+  mutate(season = 
+           if_else(month %in% c("Dec", "Jan", "Feb"), "winter", 
+                   if_else(month %in% c("Mar", "Apr", "May"), "spring", 
+                           if_else(month %in% c("Jun", "Jul", "Aug"), "summer", "autumn"))), 
+         season = as.factor(season)) %>% 
+  #clean zip code, exclude unreasonable zip codes
+  mutate(zip_code = str_sub(zip_code, 1, 5)) %>% 
+  filter(zip_code != "" & zip_code != "99999" & 
+         zip_code != "10691" & zip_code != "11251", 
+         incident_type < 164, 
+         year == "2013") %>% 
+  group_by(zip_code, season) %>% 
+  summarize(true_fire = n())
+
+##pull population data from the choroplethrZip package
+data("df_pop_zip")
+pop_in_ny = 
+  df_pop_zip %>% 
+  rename(zip_code = region, 
+         population = value)
+
+reg_data = left_join(reg_prep, pop_in_ny, by = "zip_code")
+```
+###The regression model
+```{r reg}
+fit = lm(true_fire ~ population + season, data = reg_data)
+broom::tidy(fit) %>% 
+  knitr::kable()
+```
+

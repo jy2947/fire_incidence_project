@@ -44,28 +44,13 @@ fire_factor1 = fire_data %>%
     incident_desc = forcats::fct_reorder(incident_desc, count))
 
 fire_factor1 %>%
-  filter(count > 10000) %>%
+  filter(incident_type >= 100 & incident_type <=199) %>% 
+  filter(count > 100) %>%
   select(-incident_type) %>% 
   knitr::kable()
 
 fire_factor1 %>%
-  filter(count > 10000) %>% 
-  ggplot(aes(x = incident_desc, y = count)) +
-  geom_col() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 9)) +
-  labs(title = "Frequency for Contributing Factors of Fire Incidents",
-       x = "Contributing Factors",
-       y = "Frequency",
-       caption = "Data provided by Fire Department of New York City (FDNY)")
-
-fire_factor1 %>%
-  filter(incident_type >= 100 & incident_type <=199 | incident_type == 561) %>% 
- # filter(count > 10000) %>%
-  select(-incident_type) %>% 
-  knitr::kable()
-
-fire_factor1 %>%
-  filter(incident_type >= 100 & incident_type <=199 | incident_type == 561) %>% 
+  filter(incident_type >= 100 & incident_type <=199) %>% 
   filter(count > 100) %>% 
   ggplot(aes(x = incident_desc, y = count)) +
   geom_col() +
