@@ -1,0 +1,31 @@
+---
+title: "Factors Associated with Fire Accidents in New York City from 2013 to 2017"
+author: "Jiawei Ye, Yuxin Yang, Ruoyu Ji, Lingyu Zhang"
+date: "December, 2018"
+output:
+  html_document: 
+    toc: true
+    toc_float: true
+---
+
+<img src="images/FDNY_LEGO2.jpg" style="width:100%">
+
+# Moitivation
+
+The story starts on a peaceful weekend night, 100 Haven Avenue, Tower 3.
+
+The fire alarm went off. AT 2 A.M.
+
+The residents were woken up from their sweet dreams and had to rush downstairs in bewilderment. Nothing seemed to be wrong in this building. No heat, no smoke. No sign of fire or danger.
+
+The firemen arrived in minutes. The good news was they didn't need to risk their lives to rescue anyone from fire, the bad news was they still had to make sure nothing went wrong in this building at 2 o'clock in midnight.
+
+But there was nothing wrong - except for an open door that should not be opened on the rooftop.
+
+Someone began wondering - how often do incidents like this happen in NYC?
+
+# Data Sources
+
+**Data source URL: <https://data.cityofnewyork.us/Public-Safety/Incidents-Responded-to-by-Fire-Companies/tm6d-hbzd>**
+
+Data is provided by the Fire Department of New York City (FDNY), and last updated by 09/10/2018. Though the New York Fire Incident Reporting System (NYFIRS) was designed specifically to understand the nature and causes of fire, it has been expanded to collect basic information on all incidents.
