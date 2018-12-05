@@ -1,10 +1,4 @@
 base
-methods
-datasets
-utils
-grDevices
-graphics
-stats
 RSocrata
 tidyverse
 ggplot2
@@ -18,3 +12,4 @@ forcats
 choroplethrZip
 patchwork
 scales
+plotly

@@ -3,7 +3,7 @@ title: "Fire alarm distribution in New York"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, include = FALSE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
 library(RSocrata)
 library(tidyverse)
 library(choroplethrZip)

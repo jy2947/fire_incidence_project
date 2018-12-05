@@ -1,9 +1,9 @@
 ---
-title: "regression"
+title: "Regression analysis"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
 library(tidyverse)
 library(choroplethrZip)
 library(RSocrata)
@@ -55,9 +55,17 @@ pop_in_ny =
 
 reg_data = left_join(reg_prep, pop_in_ny, by = "zip_code")
 ```
-###The regression model
+
+We wanted to further explore the factors that affects the number of true fire cases in a specific area in 2013. We found that the population heat map was very similar to our fire cases distribution map, therefore we build a linear regression model to test factors that might have associations with the number of true fire cases. 
+
 ```{r reg}
 fit = lm(true_fire ~ population + season, data = reg_data)
 broom::tidy(fit) %>% 
-  knitr::kable()
+  knitr::kable(digits = 3)
 ```
+
+
+The model shows that population in an area is highly associated with the number of fire cases. In a given season, when average population increases by 1000, there will be one more true fire cases in an area. Also in summer there seems to be an average of 8 less true fire cases than in the autumn.  
+
+
+If you are finding a place to live in New York City and you would like to live in a place that is least likely to caught on fire, we would suggest to live in a less populated area.  
