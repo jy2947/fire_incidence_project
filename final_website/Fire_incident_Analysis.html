@@ -11,7 +11,7 @@
 
 
 
-<title>Contributing Factor Analysis</title>
+<title>Fire Incident Analysis</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -184,21 +184,21 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="Fire_incident_Analysis.html">Fire Incident Analysis</a>
+  <a href="Fire_incident_Analysis.html">Fire incident Analysis</a>
 </li>
 <li>
   <a href="Contributing_Factor_Analysis.html">Contributing Factor</a>
 </li>
 <li>
-  <a href="fire_map.html">Location</a>
+  <a href="Location.html">Location</a>
 </li>
 <li>
-  <a href="regression.html">Population</a>
+  <a href="Population.html">Population</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="mailto:&lt;jy2947@cumc.columbia.com&gt;">
+  <a href="mailto:&lt;you@youremail.com&gt;">
     <span class="fa fa-envelope fa-lg"></span>
      
   </a>
@@ -210,7 +210,7 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="https://lz2657.shinyapps.io/shiny/">Shiny</a>
+  <a href="https://github.com/jy2947/fire_incidence_project">Shinny</a>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -221,22 +221,17 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Contributing Factor Analysis</h1>
+<h1 class="title toc-ignore">Fire Incident Analysis</h1>
 
 </div>
 
 
-<div id="counts-of-contributing-factors" class="section level3">
-<h3>Counts of Contributing Factors</h3>
-<p>We derive contributing factors from the “incident_type_desc” variable in the original dataset and filter out factors related to true fire alarms to make analysis more readily interpretable. And since our dataset is quite large in size, the table below only includes counts that are over 100.</p>
-<p><img src="final_website/images/factor_table.jpg" style="width:100%" ></p>
-</div>
-<div id="barplot-of-contributing-factors" class="section level3">
-<h3>Barplot of Contributing Factors</h3>
-<p>Also, we can make the barplot for those factor counts, which may convey information more directly.</p>
-<p><img src="final_website/images/factor_plot.png" style="width:100%" ></p>
-<p>From the plot, we can see that the most common contributing factor for true fire alarms is “cooking fire, confined to container”. Its count is 3 times more than that of the second factor “outside rubbish, trash or waste fire”. Despite those two, factors like “building fire” and “trash or rubbish fire, contained” are frequently reported as well.</p>
-</div>
+<p>To know the possible effects on the number of fire incidents, we plot two graphs to devlope potential effects. The first graph is the number of fire incidents in each borough according to months. We are interested in the effect of seasons, and we expected that the highest number of fire incidents would be in winter due to the dry weather.</p>
+<p><img src="fire_location_plot-1.png" style="width:75%" ></p>
+<p>We can observe from the plot that the peak of the highest number of fire incidents happen from November to March. However, we can find that counts in February is relatively low among these months. (cause by NA value?)</p>
+<p>Similarly, we plot a distribution of the number of fire incidents according to hours for each borough. The plot indicates that most fire incidents happened in the afternoon.</p>
+<p><img src="unnamed-chunk-2-1.png" style="width:75%" ></p>
+<p>From visualization, we detect that the number of the fire incident vary distinctively among different hours and seasons. We will do a further statistical test to see if there is any relationship between season and a total number of fire incidents.</p>
 
 
 
