@@ -2,7 +2,7 @@
 title: "Count over time"
 author: "Yuxin"
 date: "2018年12月1日"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -50,6 +50,6 @@ analysis %>%
   group_by(hour,city) %>%
   summarize(n= n()) %>%
 ggplot(aes(x = hour, y = n, color = city))+
-  geom_smooth(se = FALSE)+
+  geom_line()
   labs(title = "Number of Fire incident according to hours")
 ```

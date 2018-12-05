@@ -17,7 +17,7 @@ navbar:
     - icon: fa-github fa-lg
       href: https://github.com/jy2947/fire_incidence_project
     - text: "Shiny"
-      href: https://github.com/jy2947/fire_incidence_project
+      href: https://lz2657.shinyapps.io/shiny/
 output:
   html_document:
     toc: true

@@ -184,21 +184,21 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="Fire_incident_Analysis.html">Fire incident Analysis</a>
+  <a href="Fire_incident_Analysis.html">Fire Incident Analysis</a>
 </li>
 <li>
   <a href="Contributing_Factor_Analysis.html">Contributing Factor</a>
 </li>
 <li>
-  <a href="Location.html">Location</a>
+  <a href="fire_map.html">Location</a>
 </li>
 <li>
-  <a href="Population.html">Population</a>
+  <a href="regression.html">Population</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="mailto:&lt;you@youremail.com&gt;">
+  <a href="mailto:&lt;jy2947@cumc.columbia.com&gt;">
     <span class="fa fa-envelope fa-lg"></span>
      
   </a>
@@ -210,7 +210,7 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="https://github.com/jy2947/fire_incidence_project">Shinny</a>
+  <a href="https://github.com/jy2947/fire_incidence_project">Shiny</a>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -228,9 +228,9 @@ $(document).ready(function () {
 
 <p>To know the possible effects on the number of fire incidents, we plot two graphs to devlope potential effects. The first graph is the number of fire incidents in each borough according to months. We are interested in the effect of seasons, and we expected that the highest number of fire incidents would be in winter due to the dry weather.</p>
 <p><img src="fire_location_plot-1.png" style="width:75%" ></p>
-<p>We can observe from the plot that the peak of the highest number of fire incidents happen from November to March. However, we can find that counts in February is relatively low among these months. (cause by NA value?)</p>
+<p>We can observe from the plot that the peak of the highest number of fire incidents happen from November to March. However, we spot the total number of incident decrease somewhat from December to February and it suddenly surging in March. We assume that the temperature is extremely low in February, and the fire is less likely to happen.</p>
 <p>Similarly, we plot a distribution of the number of fire incidents according to hours for each borough. The plot indicates that most fire incidents happened in the afternoon.</p>
-<p><img src="unnamed-chunk-2-1.png" style="width:75%" ></p>
+<p><img src="unnamed-chunk-4-1.png" style="width:75%" ></p>
 <p>From visualization, we detect that the number of the fire incident vary distinctively among different hours and seasons. We will do a further statistical test to see if there is any relationship between season and a total number of fire incidents.</p>
 
 
