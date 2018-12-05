@@ -1,0 +1,74 @@
+---
+title: "Contributing Factor Analysis"
+output:
+  html_document: 
+    toc: true
+    toc_float: true
+---
+
+
+```{r setup, include = FALSE}
+library(tidyverse)
+```
+
+```{r read_data, include = FALSE}
+# turn the factor variables with one level to character or integer
+
+fire_data = read.csv(file = "../data/Incidents_Responded_to_by_Fire_Companies.csv") %>%
+  janitor::clean_names() %>%
+  mutate(incident_type_desc = as.character(incident_type_desc),
+         incident_date_time = as.character(incident_date_time),
+         arrival_date_time = as.character(arrival_date_time),
+         last_unit_cleared_date_time = as.character(last_unit_cleared_date_time),
+         action_taken1_desc = as.character(action_taken1_desc),
+         action_taken2_desc = as.character(action_taken2_desc),
+         action_taken3_desc = as.character(action_taken3_desc),
+         property_use_desc = as.character(property_use_desc),
+         street_highway = as.character(street_highway),
+         zip_code = as.integer(zip_code),
+         floor = as.integer(floor)
+         )
+```
+
+### Counts of Contributing Factors
+
+We derive contributing factors from the "incident_type_desc" variable in the original dataset and filter out factors related to true fire alarms to make analysis more readily interpretable. And since our dataset is quite large in size, the table below only includes counts that are over 100. 
+
+```{r count by incident type, echo = FALSE, warning = FALSE}
+# count the frequency of the specific description of incidents and plot with order
+
+fire_factor1 = fire_data %>%
+  group_by(incident_type_desc) %>%
+  summarize(count = n()) %>%
+  arrange(desc(count)) %>%
+  ungroup() %>% 
+  separate(incident_type_desc, into = c("incident_type", "incident_desc"), sep = "-") %>% 
+  mutate(incident_type = as.integer(incident_type),
+    incident_desc = forcats::fct_reorder(incident_desc, count))
+
+fire_factor1 %>%
+  filter(incident_type >= 100 & incident_type <=199) %>% 
+  filter(count > 100) %>%
+  select(-incident_type) %>%
+  rename(factor = incident_desc) %>% 
+  knitr::kable()
+```
+
+### Barplot of Contributing Factors
+
+Also, we can make the barplot for those factor counts, which may convey information more directly.
+
+```{r plot by incident type, echo = FALSE}
+fire_factor1 %>%
+  filter(incident_type >= 100 & incident_type <=199) %>% 
+  filter(count > 100) %>% 
+  ggplot(aes(x = incident_desc, y = count)) +
+  geom_col() +
+  theme(axis.text.x = element_text(angle = 55, hjust = 1, size = 9)) +
+  labs(title = "Frequency for Contributing Factors of True Fire Alarm",
+       x = "Contributing Factors",
+       y = "Frequency",
+       caption = "Data provided by Fire Department of New York City (FDNY)")
+```
+
+From the plot, we can see that the most common contributing factor for true fire alarms is "cooking fire, confined to container". Its count is 3 times more than that of the second factor "outside rubbish, trash or waste fire". Despite those two, factors like "building fire" and "trash or rubbish fire, contained" are frequently reported as well.
