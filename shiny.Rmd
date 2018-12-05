@@ -1,0 +1,125 @@
+---
+title: "fire_incidence_dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: row
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(stringr)
+library(shiny)
+library(plotly)
+library(RSocrata)
+library(devtools)
+library(choroplethrZip)
+```
+
+```{r read_and_tidy}
+with_detail = read.socrata("https://data.cityofnewyork.us/resource/ibte-hq4u.csv") %>%
+  janitor::clean_names()
+
+fire_data = with_detail %>% 
+  select(incident_date_time, incident_type_desc, 
+         property_use_desc, zip_code, borough_desc) %>% 
+  separate(borough_desc, sep = "- ", into = c("n", "borough")) %>% 
+  select(-n) %>% 
+  separate(incident_type_desc, into = c("incident_type", "incident_desc"), sep = "- ") %>% 
+  mutate(incident_type = as.integer(str_sub(incident_type, 1, 3)),
+         month = str_sub(incident_date_time, 6, 7),
+         month = str_replace(month, "03", "Spring"),
+         month = str_replace(month, "04", "Spring"),
+         month = str_replace(month, "05", "Spring"),
+         month = str_replace(month, "06", "Summer"),
+         month = str_replace(month, "07", "Summer"),
+         month = str_replace(month, "08", "Summer"),
+         month = str_replace(month, "09", "Autumn"),
+         month = str_replace(month, "10", "Autumn"),
+         month = str_replace(month, "11", "Autumn"),
+         month = str_replace(month, "12", "Winter"),
+         month = str_replace(month, "01", "Winter"),
+         month = str_replace(month, "02", "Winter"),
+         borough = str_to_title(borough))
+
+zip_map_data = 
+  fire_data %>% 
+  mutate(zip_code = str_sub(zip_code, 1, 5)) %>% 
+  filter(zip_code != "" & zip_code != "99999" & zip_code != "10691" & 
+         zip_code != "11251" & zip_code != "11209" & incident_type < 165) %>% 
+  rename(region = zip_code)
+```
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+boros = zip_map_data %>% distinct(borough) %>% pull() %>% str_to_title()
+
+# selectInput widget
+selectInput("boro_choice", label = h3("Select boro"),
+            choices = boros, selected = "Manhattan")
+
+max_fire = 831
+min_fire = 0
+  
+# sliderInput widget
+sliderInput("fire_range", label = h3("Choose fire number range"), min = min_fire, 
+        max = max_fire, value = c(0, 831))
+
+season = zip_map_data %>% distinct(month) %>% pull() 
+
+# radioButtons widget
+radioButtons("season_choice", label = h3("Choose season"),
+    choices = season, selected = "Spring")
+```
+
+
+Row
+-----------------------------------------------------------------------
+
+### Numbers of true fire by location
+
+```{r}
+renderPlot({
+zip_map_data_for_map = 
+  zip_map_data %>% 
+  filter(borough == input$boro_choice,
+         month == input$season_choice
+        ) %>%  
+  group_by(region) %>% 
+  summarize(value = n()) %>%
+  mutate(value = ifelse(value %in% input$fire_range[1]:input$fire_range[2], value, 0))
+         
+zip_choropleth(zip_map_data_for_map,
+               zip_zoom = zip_map_data_for_map$region, 
+               title      = "Fire alarm incidence",
+               legend     = "count") + coord_map()
+})
+```
+
+Row {.tabset .tabset-fade}
+-----------------------------------------------------------------------
+
+### Number of true fire in each hour
+
+```{r}
+renderPlotly({
+fire_hour <- fire_data %>% 
+  filter(borough == input$boro_choice,
+         month == input$season_choice
+        ) 
+
+fire_hour %>%
+  mutate(incident_hour = str_c(substr(incident_date_time, 12, 13)),
+         incident_hour = as.factor(incident_hour)
+         ) %>%
+  group_by(incident_hour) %>%
+  summarize(n = n()) %>%
+  plot_ly(x = ~incident_hour, y = ~n, type = "bar", 
+          alpha = 0.6, 
+          color = ~ factor(incident_hour), 
+          colors = "Paired")
+})
+```
