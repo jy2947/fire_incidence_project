@@ -6,7 +6,7 @@ title: "Contributing Factor Analysis"
 
 We derive contributing factors from the "incident_type_desc" variable in the original dataset and filter out factors related to true fire alarms to make analysis more readily interpretable. And since our dataset is quite large in size, the table below only includes counts that are over 100. 
 
-<img src="./final_website/images/factor_table.jpg" style="width:100%" >
+<img src="./final_website/images/factor_table.JPG" style="width:100%" >
 
 ### Barplot of Contributing Factors
 
