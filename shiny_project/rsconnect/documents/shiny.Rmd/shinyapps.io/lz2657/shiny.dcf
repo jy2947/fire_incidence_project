@@ -5,6 +5,6 @@ account: lz2657
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 604467
-bundleId: 1741760
+bundleId: 1743518
 url: https://lz2657.shinyapps.io/shiny/
-when: 1543995154.38873
+when: 1544038407.59673
