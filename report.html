@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Report</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="Fire_incident_Analysis.html">Fire Incident Analysis</a>
+</li>
+<li>
+  <a href="Contributing_Factor_Analysis.html">Contributing Factor</a>
+</li>
+<li>
+  <a href="fire_map.html">Location</a>
+</li>
+<li>
+  <a href="regression.html">Population</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:&lt;jy2947@cumc.columbia.com&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/jy2947/fire_incidence_project">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://lz2657.shinyapps.io/shiny/">Shiny</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Report</h1>
+
+</div>
+
+
+<p>Report</p>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<div id="team-members" class="section level3">
+<h3>Team members:</h3>
+<p>Jiawei Ye (jy2947), Yuxin Yang (yy2926), Ruoyu Ji (rj2543), Lingyu Zhang (lz2657)</p>
+</div>
+<div id="motivation-and-related-work" class="section level3">
+<h3>Motivation and related work:</h3>
+<p>Since all our team members live on campus and are disturbed by fire alarms time to time. And always, no true fire alarm happens. We began to wonder that how often do incidents like this happen in NYC. We noticed that in the examples drawn from submissions in the Fall of 2017, there is one called 鈥淔actors Associated with Vehicle Accidents in New York City from 2014 to 2016鈥?. This one made a great integration of techniques we have learned from Data Science class (i.e., including Shiny, linear model, interactivity and EDA). We were inspired and finally found the available data called 鈥淚ncidents Responded to by Fire Companies鈥? on NYC Open Data. The original data covers description, borough, zip code and specific time period related to certain fire incidents.</p>
+</div>
+<div id="initial-questions-and-evolution" class="section level3">
+<h3>Initial questions and evolution:</h3>
+<p>Despite variables that are directly related to fire incidents (such as incident description), we tried to explore linkages between the frequency of fire incidents and other potential causal factors. At first, in order to see the possible effects of time on the frequency of fire incidents, we plotted the number of fire incidents in each borough according to months and hours, respectively. Then, from plots made, we saw a need to build a regression model using season as one of main predictors. Addressing the underlying relationship between geography and frequency of fire incidents had always been our focus. Unfortunately, we only obtained the borough and the zip code information from the raw data instead of any prespecified latitude and longitude variables (which would make mapping and visualization much easier in this case). And there is not any direct shortcut establishing individual linkage between those two. However, we have overcome such a difficulty. :) During the process of mapping, we somehow found that the population heat map was very similar to our fire cases distribution map, therefore we wanted to add the population variable to the regression model as another main predictor to see if there is some relationship between. We guess this can be an exploratory bonus!</p>
+</div>
+</div>
+<div id="methods" class="section level2">
+<h2>Methods</h2>
+<div id="data-source" class="section level4">
+<h4>Data Source</h4>
+<p>Our main dataset is obtained from New York City open data website in this <a href="https://data.cityofnewyork.us/Public-Safety/Incidents-Responded-to-by-Fire-Companies/tm6d-hbzd">link</a>. Although you can download the file, we suggest you not to - it is too big to be fully displayed in excel. Instead you can use the following the code to access the data. Depending on the speed of the computer, the time needed to load the data can take 2 - 30 minutes.</p>
+<pre class="r"><code>library(RSocrata)
+with_detail = read.socrata(&quot;https://data.cityofnewyork.us/resource/ibte-hq4u.csv&quot;)</code></pre>
+<p>Another data source, the estimated population in each zip code area in New York City in 2012 is provided by the package <code>choroplethrZip</code>. The author of the package claims he obtained the estimated population data from American Community Survey (ACS). We use the following code to easily get a cleaned data frame of population by zip code area in the United States.</p>
+<pre class="r"><code>devtools::install_github(&#39;arilamstein/choroplethrZip@v1.3.0&#39;)</code></pre>
+<pre><code>## Skipping install of &#39;choroplethrZip&#39; from a github remote, the SHA1 (a4d003fa) has not changed since last install.
+##   Use `force = TRUE` to force installation</code></pre>
+<pre class="r"><code>library(choroplethrZip)
+data(&quot;df_pop_zip&quot;)</code></pre>
+</div>
+<div id="cleaning" class="section level4">
+<h4>Cleaning</h4>
+<p>Despite the comprehensive information offered by the data set, we only selected a few variables of interest. They are:</p>
+<ul>
+<li><p><code>incident_date_time</code>: the time an incident happened</p></li>
+<li><p><code>incident_type_desc</code>: the description of an incident’s type</p></li>
+<li><p><code>property_use_desc</code>: property use of an fire alarm incident</p></li>
+<li><p><code>zip_code</code>: the zip code where the incident happened</p></li>
+<li><p><code>borough_desc</code>: the borouogh in which the incident happened</p></li>
+</ul>
+<p>We broke down the <code>incident_date_time</code> variable to obtain the year, month and hour when an incident happened, and further created a <code>season</code> variable by month.</p>
+<p>We broke down the <code>incident_type_desc</code> variable to obtain a three-digits code for each description of the incident, and a character variable for the description. The descriptions were classified as “fire alarm with fire”, “fire alarm without fire” and “service request” according to the descriptions.</p>
+<p>We broke down the <code>borough_desc</code> variable to obtain a character variable with the boroughs’ name.</p>
+<p>The code we used were:</p>
+<pre class="r"><code>fire_data = with_detail %&gt;% 
+  select(incident_date_time, incident_type_desc, zip_code, borough_desc) %&gt;% 
+  separate(incident_type_desc, into = c(&quot;incident_type&quot;, &quot;incident_desc&quot;), sep = &quot;-&quot;) %&gt;% 
+  mutate(incident_type = as.integer(str_sub(incident_type, 1, 3)), 
+         type = ifelse(incident_type &lt; 165, &quot;alarm with fire&quot;,  
+                ifelse((incident_type-200)*(incident_type-251)&lt;=0 |   
+                       (incident_type-600)*(incident_type-653)&lt;=0 | 
+                       (incident_type-700)*(incident_type-746)&lt;=0, &quot;alarm without fire&quot;, &quot;service&quot;)),
+         city = substr(borough_desc, 5, 20),
+         hour = substr(incident_date_time, 12, 13),
+         month = as.integer(substr(incident_date_time, 6, 7)),
+         month_origin = month,
+         month = str_replace(month, &quot;3&quot;, &quot;Spring&quot;),
+         month = str_replace(month, &quot;4&quot;, &quot;Spring&quot;),
+         month = str_replace(month, &quot;5&quot;, &quot;Spring&quot;),
+         month = str_replace(month, &quot;6&quot;, &quot;Summer&quot;),
+         month = str_replace(month, &quot;7&quot;, &quot;Summer&quot;),
+         month = str_replace(month, &quot;8&quot;, &quot;Summer&quot;),
+         month = str_replace(month, &quot;9&quot;, &quot;Autumn&quot;),
+         month = str_replace(month, &quot;10&quot;, &quot;Autumn&quot;),
+         month = str_replace(month, &quot;11&quot;, &quot;Autumn&quot;),
+         month = str_replace(month, &quot;12&quot;, &quot;Winter&quot;),
+         month = str_replace(month, &quot;1&quot;, &quot;Winter&quot;),
+         month = str_replace(month, &quot;2&quot;, &quot;Winter&quot;),
+         month = fct_relevel(month, &quot;Spring&quot;))</code></pre>
+<p>For the dataset containing the population in each zip code area in the US, we used the following code to obtain the population only in New York City.</p>
+</div>
+<div id="exploratory-data-analysis" class="section level4">
+<h4>Exploratory data analysis</h4>
+<p>We first addressed our initial interest, which was how many fire alarms without fire happened in New York City. A bar plot and a table displaying the most frequent causes of alarms were created using the following code.</p>
+<pre class="r"><code>fire_data %&gt;%
+  group_by(incident_desc) %&gt;%
+  summarize(count = n()) %&gt;%
+  arrange(desc(count)) %&gt;%
+  slice(1:10) %&gt;%
+  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">incident_desc</th>
+<th align="right">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Rescue, EMS incident, other</td>
+<td align="right">823378</td>
+</tr>
+<tr class="even">
+<td align="left">Smoke scare, odor of smoke</td>
+<td align="right">148924</td>
+</tr>
+<tr class="odd">
+<td align="left">Removal of victim(s) from stalled elevator</td>
+<td align="right">118264</td>
+</tr>
+<tr class="even">
+<td align="left">Malicious, mischievous false call, other</td>
+<td align="right">117864</td>
+</tr>
+<tr class="odd">
+<td align="left">Water or steam leak</td>
+<td align="right">108893</td>
+</tr>
+<tr class="even">
+<td align="left">Gas leak (natural gas or LPG)</td>
+<td align="right">108362</td>
+</tr>
+<tr class="odd">
+<td align="left">Unwarranted alarm/defective condition of alarm system</td>
+<td align="right">100500</td>
+</tr>
+<tr class="even">
+<td align="left">Cooking fire, confined to container</td>
+<td align="right">87039</td>
+</tr>
+<tr class="odd">
+<td align="left">Defective elevator, no occupants</td>
+<td align="right">48147</td>
+</tr>
+<tr class="even">
+<td align="left">CO detector activation due to malfunction</td>
+<td align="right">45982</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>ggplot(data = fire_data, aes(x = type)) + geom_bar()</code></pre>
+<p><img src="report_files/figure-html/frequency_analysis-1.png" width="672" /></p>
+<p>We changed our focus to true fire incidents since we thought it is more meaningful to explore life-threatening scenario.</p>
+<p>We explored effect of time on the number of true fire incidents and created plots for the number of true fire incidents in each hour and each month using the following code:</p>
+<pre class="r"><code>true_fire_month = fire_data %&gt;%
+  filter(incident_type &lt; 165) %&gt;%
+  mutate(month_origin = as.factor(month.abb[month_origin]),
+         month_origin = fct_relevel(month_origin, &quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;, &quot;Apr&quot;, &quot;May&quot;, &quot;Jun&quot;, &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;, &quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;),
+         borough_desc = substr(borough_desc, 5, 20)) %&gt;%
+  group_by(borough_desc, month_origin) %&gt;%
+  summarize(n = n())
+
+ggplot(true_fire_month, aes(x = month_origin, y = n, color = borough_desc, group = borough_desc)) + 
+    geom_line() +
+    labs(title = &quot;Number of True Fire Alarm in Each Borough&quot;) +
+    theme(panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(), 
+          axis.line = element_line(colour = &quot;black&quot;))</code></pre>
+<p><img src="report_files/figure-html/hour_month_plot-1.png" width="672" /></p>
+<pre class="r"><code>true_fire_hour = fire_data %&gt;%
+  group_by(hour, city) %&gt;%
+  summarize(n = n())
+
+ggplot(data = true_fire_hour, aes(x = hour, y = n, color = city, group = city)) +
+  geom_line() +
+  labs(title = &quot;Number of Fire incident according to hours&quot;) +
+    theme(panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(), 
+          axis.line = element_line(colour = &quot;black&quot;))</code></pre>
+<p><img src="report_files/figure-html/hour_month_plot-2.png" width="672" /></p>
+<p>We next explored the most frequent contributing factors of true fire using the following code:</p>
+<pre class="r"><code>fire_factor = with_detail %&gt;%
+  group_by(incident_type_desc) %&gt;%
+  summarize(count = n()) %&gt;%
+  arrange(desc(count)) %&gt;%
+  ungroup() %&gt;% 
+  separate(incident_type_desc, into = c(&quot;incident_type&quot;, &quot;incident_desc&quot;), sep = &quot;-&quot;) %&gt;% 
+  mutate(incident_type = str_sub(incident_type, 1, 3), 
+         incident_type = as.integer(incident_type),
+    incident_desc = forcats::fct_reorder(incident_desc, count))
+
+fire_factor %&gt;%
+  filter(incident_type &gt;= 100 &amp; incident_type &lt;=199) %&gt;% 
+  filter(count &gt; 100) %&gt;%
+  select(-incident_type) %&gt;% 
+  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">incident_desc</th>
+<th align="right">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Cooking fire, confined to container</td>
+<td align="right">87039</td>
+</tr>
+<tr class="even">
+<td align="left">Outside rubbish, trash or waste fire</td>
+<td align="right">28130</td>
+</tr>
+<tr class="odd">
+<td align="left">Building fire</td>
+<td align="right">13089</td>
+</tr>
+<tr class="even">
+<td align="left">Trash or rubbish fire, contained</td>
+<td align="right">10451</td>
+</tr>
+<tr class="odd">
+<td align="left">Fuel burner/boiler malfunction, fire confined</td>
+<td align="right">9672</td>
+</tr>
+<tr class="even">
+<td align="left">Passenger vehicle fire</td>
+<td align="right">8985</td>
+</tr>
+<tr class="odd">
+<td align="left">Fire, other</td>
+<td align="right">8196</td>
+</tr>
+<tr class="even">
+<td align="left">Fires in structure other than in a building</td>
+<td align="right">6092</td>
+</tr>
+<tr class="odd">
+<td align="left">Brush or brush</td>
+<td align="right">4516</td>
+</tr>
+<tr class="even">
+<td align="left">Commercial Compactor fire, confined to rubbish</td>
+<td align="right">2485</td>
+</tr>
+<tr class="odd">
+<td align="left">Outside rubbish fire, other</td>
+<td align="right">1237</td>
+</tr>
+<tr class="even">
+<td align="left">Road freight or transport vehicle fire</td>
+<td align="right">949</td>
+</tr>
+<tr class="odd">
+<td align="left">Mobile property (vehicle) fire, other</td>
+<td align="right">398</td>
+</tr>
+<tr class="even">
+<td align="left">Special outside fire, other</td>
+<td align="right">316</td>
+</tr>
+<tr class="odd">
+<td align="left">Chimney or flue fire, confined to chimney or flue</td>
+<td align="right">226</td>
+</tr>
+<tr class="even">
+<td align="left">Incinerator overload or malfunction, fire confined</td>
+<td align="right">207</td>
+</tr>
+<tr class="odd">
+<td align="left">Outside equipment fire</td>
+<td align="right">181</td>
+</tr>
+<tr class="even">
+<td align="left">Rail vehicle fire</td>
+<td align="right">128</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>fire_factor %&gt;%
+  filter(incident_type &gt;= 100 &amp; incident_type &lt;=199) %&gt;% 
+  filter(count &gt; 100) %&gt;% 
+  ggplot(aes(x = incident_desc, y = count)) +
+  geom_col() +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 55, hjust = 1, size = 9)) +
+  labs(title = &quot;Frequency for Contributing Factors of True Fire Alarm&quot;,
+       x = &quot;Contributing Factors&quot;,
+       y = &quot;Frequency&quot;,
+       caption = &quot;Data provided by Fire Department of New York City (FDNY)&quot;)</code></pre>
+<p><img src="report_files/figure-html/fire_factor-1.png" width="672" /></p>
+<p>We were also interested in the distribution of true fire incidents in different area. We found a package called <code>zipcode</code> which has longitude and latitude coordinates of each zip code, and tried to plot every fire alarm cases on the map by adding random numbers to each fire alarm cases using the following code:</p>
+<pre class="r"><code>library(zipcode)
+
+data(&quot;zipcode&quot;)
+zipcode = zipcode %&gt;% 
+  rename(zip_code = zip)
+
+with_cor = left_join(with_detail, zipcode, by = &quot;zip_code&quot;) %&gt;%
+  filter(borough_desc == &quot;1 - Manhattan&quot;&amp; zip_code != &quot;&quot; &amp; zip_code != &quot;99999&quot; &amp; 
+         zip_code != &quot;10691&quot; &amp; zip_code != &quot;11251&quot;)
+
+with_cor %&gt;% 
+  mutate(latitude = latitude +  0.0015 * rnorm(558611, 0, 1),
+         longitude = longitude +  0.0015 * rnorm(558611, 0, 1)) %&gt;% 
+  group_by(zip_code) %&gt;% 
+  mutate(count_in_zip = n()) %&gt;%
+  ggplot(aes(x = longitude, y = latitude)) +
+  geom_point(aes(color = count_in_zip), size = 0.015) +
+  theme_bw()</code></pre>
+<p><img src="report_files/figure-html/zip_coordinate-1.png" width="672" /></p>
+<p>But the map does not look good and real. So we searched for other available methods for maps and found another package called <code>choroplethrZip</code>. Heat maps were then created using following code:</p>
+<pre class="r"><code>zip_map_data = 
+  fire_data %&gt;% 
+  mutate(zip_code = str_sub(zip_code, 1, 5)) %&gt;% 
+  filter(zip_code != &quot;&quot; &amp; zip_code != &quot;99999&quot; &amp; 
+         zip_code != &quot;10691&quot; &amp; zip_code != &quot;11251&quot;) %&gt;% 
+  rename(region = zip_code) 
+
+zip_map_data_for_map = 
+  zip_map_data %&gt;% 
+  filter(incident_type &lt; 165) %&gt;% 
+  group_by(region) %&gt;% 
+  summarize(value = n())
+
+zip_choropleth(zip_map_data_for_map,
+               zip_zoom = zip_map_data_for_map$region, 
+               title      = &quot;Fire incidence in New York, 2013-2017&quot;,
+               legend     = &quot;count&quot;) + coord_map()</code></pre>
+<pre><code>## Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
+<p><img src="report_files/figure-html/zip_map-1.png" width="672" /></p>
+<div id="visualization" class="section level5">
+<h5>Visualization</h5>
+<p>Apart from the visualization methods described above, we made a shiny dashboard to visualize the distribution of true fire cases in different season, time of a day, and borough. The link of it is <a href="https://lz2657.shinyapps.io/shiny/" class="uri">https://lz2657.shinyapps.io/shiny/</a></p>
+</div>
+</div>
+<div id="statistical-analysis" class="section level4">
+<h4>Statistical analysis</h4>
+<p>We build a regression model on the number of true fire incidents against the population and season in each zip code area. Population was considered as a continuous variable and season as a categorical variable. Summer was used as the reference variable since exploratory analysis showed there’s less fire in summer than in other seasons.</p>
+<pre class="r"><code>reg_prep = 
+  with_detail %&gt;% 
+  select(incident_date_time, incident_type_desc, 
+         property_use_desc, zip_code, borough_desc) %&gt;% 
+  #get a clean borough variable
+  separate(borough_desc, sep = &quot;- &quot;, into = c(&quot;n&quot;, &quot;borough&quot;)) %&gt;% 
+  select(-n) %&gt;% 
+  #make it easier to filter true fire alarms
+  separate(incident_type_desc, into = c(&quot;incident_type&quot;, &quot;incident_desc&quot;), sep = &quot;- &quot;) %&gt;%
+  mutate(incident_type = str_sub(incident_type, 1, 3),
+         incident_type = as.integer(incident_type)) %&gt;% 
+  #clean year and month
+  mutate(month = as.factor(month.abb[as.integer(substr(incident_date_time, 6, 7))]),
+         month = fct_relevel(month, &quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;, &quot;Apr&quot;, &quot;May&quot;, 
+                             &quot;Jun&quot;, &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;, &quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;), 
+         year = str_sub(incident_date_time, 1, 4)) %&gt;% 
+  #get a season variable. I can&#39;t believe I&#39;m using this ugly if_else
+  mutate(season = 
+           if_else(month %in% c(&quot;Dec&quot;, &quot;Jan&quot;, &quot;Feb&quot;), &quot;winter&quot;, 
+                   if_else(month %in% c(&quot;Mar&quot;, &quot;Apr&quot;, &quot;May&quot;), &quot;spring&quot;, 
+                           if_else(month %in% c(&quot;Jun&quot;, &quot;Jul&quot;, &quot;Aug&quot;), &quot;summer&quot;, &quot;autumn&quot;))), 
+         season = as.factor(season), 
+         season = fct_relevel(season, c(&quot;summer&quot;, &quot;autumn&quot;, &quot;spring&quot;, &quot;winter&quot;))) %&gt;% 
+  #clean zip code, exclude unreasonable zip codes
+  mutate(zip_code = str_sub(zip_code, 1, 5)) %&gt;% 
+  filter(zip_code != &quot;&quot; &amp; zip_code != &quot;99999&quot; &amp; 
+         zip_code != &quot;10691&quot; &amp; zip_code != &quot;11251&quot;, 
+         incident_type &lt; 165, 
+         year == &quot;2013&quot;) %&gt;% 
+  group_by(zip_code, season) %&gt;% 
+  summarize(true_fire = n())
+
+##pull population data from the choroplethrZip package
+data(&quot;df_pop_zip&quot;)
+pop_in_ny = 
+  df_pop_zip %&gt;% 
+  rename(zip_code = region, 
+         population = value)
+
+reg_data = left_join(reg_prep, pop_in_ny, by = &quot;zip_code&quot;)
+
+fit = lm(true_fire ~ population + season, data = reg_data)
+broom::tidy(fit) %&gt;% 
+  knitr::kable(digits = 3)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-1.815</td>
+<td align="right">2.132</td>
+<td align="right">-0.851</td>
+<td align="right">0.395</td>
+</tr>
+<tr class="even">
+<td align="left">population</td>
+<td align="right">0.001</td>
+<td align="right">0.000</td>
+<td align="right">32.707</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">seasonautumn</td>
+<td align="right">8.331</td>
+<td align="right">2.248</td>
+<td align="right">3.705</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">seasonspring</td>
+<td align="right">8.399</td>
+<td align="right">2.248</td>
+<td align="right">3.736</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">seasonwinter</td>
+<td align="right">8.025</td>
+<td align="right">2.258</td>
+<td align="right">3.554</td>
+<td align="right">0.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="results" class="section level2">
+<h2>Results</h2>
+<ul>
+<li><p>We found that medical services is the most frequent reason of fire alarms. <img src="plot_1.png" alt="type_table" /></p></li>
+<li><p>We found that alarms with fire is much less than services requested and alarms without fire. <img src="plot_2.png" alt="type_histogram" /></p></li>
+<li><p>We found that most true fire incidents happened in the afternoon and there’s a peak around dinner time.<br />
+<img src="plot_3.png" alt="hour_plot" /></p></li>
+<li><p>We found that highest number of fire incidents happen from November to March. The total number of incidents had a decreasing trend from December to February but suddenly surged in March. <img src="plot_4.png" alt="month_plot" /></p></li>
+<li><p>We found that the most frequent cause of true fire incidents is cooking, followed by outdoor rubbish fire. <img src="plot_5.png" alt="factor_table" /></p></li>
+</ul>
+<div class="figure">
+<img src="plot_6.png" alt="factor_bar" />
+<p class="caption">factor_bar</p>
+</div>
+<ul>
+<li><p>We found that in Manhattan, fire alarms happens the most at upper west side, morningside heights, east harlem, lower east side and east village, regardless of whether there’s really fire. While inwood, tribeca and upper east side have relatively fewer fire alarms and true fire cases. <img src="plot_7.png" alt="mht_map" /></p></li>
+<li><p>We found that in New York City, Queens seems to be a place with less fire alarms and true fire cases while Brooklyn has the most. <img src="plot_8.png" alt="nyc_map" /></p></li>
+<li><p>We found that the number of true fire incidences had highly significant positive association with population, and in summer there was an average of 8 less true fire cases than in other seasons. <img src="/plot_9.png" alt="regression" /></p></li>
+</ul>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>We find that the fire incident numbers are primarily related with population and season in New York City. This conclusion is precisely what we expected. Our inference on the relationship between climate and total fire incidents number is based on the assumption that change climate or the temperature not changing with respect to month. However, this is not accurate for that the temperature varies distinctively in one month. If we make more profound mining into the dataset, we can combine our data with climate data to develop a more factual result concerning the relationship.</p>
+</div>
+<div id="discussion" class="section level2">
+<h2>Discussion</h2>
+</div>
+<div id="acknowledgements" class="section level2">
+<h2>Acknowledgements</h2>
+<p>We thank ourselves for finishing everything.</p>
+<p>We thank Prof Jin for delaying the due date of homework 10 to Dec. 10.</p>
+<p>We thank Ari Lamstein for developing the package <code>choroplethrZip</code> so that we can create maps using zip code.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
