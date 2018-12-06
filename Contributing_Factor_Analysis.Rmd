@@ -12,6 +12,6 @@ We derive contributing factors from the "incident_type_desc" variable in the ori
 
 Also, we can make the barplot for those factor counts, which may convey information more directly.
 
-<img src="./final_website/images/factor_plot.png" style="width:100%" >
+<img src="./count_by_incident_type-1.png" style="width:100%" >
 
 From the plot, we can see that the most common contributing factor for true fire alarms is "cooking fire, confined to container". Its count is 3 times more than that of the second factor "outside rubbish, trash or waste fire". Despite those two, factors like "building fire" and "trash or rubbish fire, contained" are frequently reported as well.
