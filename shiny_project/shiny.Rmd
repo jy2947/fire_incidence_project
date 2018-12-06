@@ -2,7 +2,7 @@
 title: "fire_incidence_dashboard"
 output: 
   flexdashboard::flex_dashboard:
-    orientation: row
+    orientation: column
 runtime: shiny
 ---
 
@@ -62,7 +62,7 @@ renderPlot({
   zip_choropleth(zip_map_data_for_map,
                  zip_zoom = zip_map_data_for_map$region, 
                  title      = "Fire alarm incidence",
-                 legend     = "count") + coord_map()
+                 legend     = "count")
 })
 ```
 
@@ -84,6 +84,8 @@ renderPlotly({
     plot_ly(x = ~incident_hour, y = ~n, type = "bar", 
             alpha = 0.6, 
             color = ~ factor(incident_hour), 
-            colors = "Paired")
+            colors = "Paired") %>%
+     layout(xaxis = list(dtick = 4),
+            showlegend = FALSE)
 })
 ```
