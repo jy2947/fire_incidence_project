@@ -8,6 +8,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(RSocrata)
 library(tidyverse)
 library(zipcode)
+library(plotly)
 ```
 
 ```{r load, cache = TRUE}
@@ -175,5 +176,43 @@ asso_sea_cause %>%
   mutate(percentage = round(if_else(season == "summer", count/39494, 
                               if_else(season == "winter", count/46800, 
                                       if_else(season == "spring", count/47097, count/44447))) ,digits = 2))
+
+cause_hour_plot = 
+  asso_sea_cause %>% 
+  mutate(hour = str_sub(incident_date_time, 12, 13), 
+         hour = as.integer(hour)) %>% 
+  group_by(hour, incident_desc) %>% 
+  summarize(count = n()) %>% 
+  arrange(desc(count)) %>% 
+  ggplot(aes(x = hour, y = count)) +
+  geom_line(aes(color = incident_desc))+ 
+  theme_classic() +
+  theme(legend.position = "none")
+ggplotly(cause_hour_plot)
+
+asso_sea_cause%>% 
+  group_by(month, property_use_desc) %>%   
+  summarize(count = n()) %>% 
+  arrange(desc(count)) %>%
+  filter(count > 2000) %>% 
+  ggplot(aes(x = month, y = count)) +
+  geom_col(aes(fill = property_use_desc)) +
+  theme_classic() +
+  theme(legend.position = "none") +
+  facet_wrap(~ property_use_desc) 
+
+
+asso_sea_cause%>% 
+  drop_na(month) %>% 
+  filter(incident_type %in% c(113, 151)) %>% 
+  group_by(month, incident_desc) %>%   
+  summarize(count = n()) %>% 
+  arrange(desc(count)) %>% 
+  ggplot(aes(x = month, y = count)) +
+  geom_col(aes(fill = incident_desc)) +
+  theme_classic() +
+  theme(legend.position = "none") +
+  facet_wrap(~ incident_desc) 
+
 ```
 
