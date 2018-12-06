@@ -12,11 +12,11 @@
 <meta name="author" content="Yuxin" />
 
 
-<title>Count over time</title>
+<title>count_over_time</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -106,34 +106,34 @@ button.code-folding-btn:focus {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 51px;
+  padding-top: 60px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 
 .section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 </style>
 
@@ -222,9 +222,9 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Count over time</h1>
+<h1 class="title toc-ignore">count_over_time</h1>
 <h4 class="author"><em>Yuxin</em></h4>
-<h4 class="date"><em>2018年12月1日</em></h4>
+<h4 class="date"><em>Dec. 1, 2018</em></h4>
 
 </div>
 
@@ -236,20 +236,19 @@ $(document).ready(function () {
   separate(date, into = c(&quot;year&quot;, &quot;month&quot;, &quot;date&quot;), sep = &quot;-&quot;) %&gt;%
   separate(time, into = c(&quot;hour&quot;, &quot;minute&quot;, &quot;second&quot;), sep = &quot;:&quot;) %&gt;%
   separate(borough_desc, into = c(&quot;code&quot;, &quot;city&quot;, sep = &quot; - &quot;)) %&gt;%
-  separate(incident_type_desc, into = c(&quot;index&quot;, &quot;description&quot;, sep = &quot; - &quot;)) %&gt;%
-  mutate(year = as.integer(year), month = as.integer(month), date = as.integer(date), hour = as.integer(hour), minute = as.integer(minute), second = as.integer(second), index = as.integer(index)) %&gt;%
+  mutate(index = substr(incident_type_desc, 1, 3),
+         year = as.integer(year), 
+         month = as.integer(month), 
+         date = as.integer(date), 
+         hour = as.integer(hour), 
+         minute = as.integer(minute), 
+         second = as.integer(second), 
+         index = as.integer(index)
+        ) %&gt;%
   filter(index &lt; 200 &amp; index &gt;99)</code></pre>
 <pre><code>## Warning: Expected 3 pieces. Missing pieces filled with `NA` in 2160271
 ## rows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
 ## 20, ...].</code></pre>
-<pre><code>## Warning: Expected 3 pieces. Additional pieces discarded in 2225151 rows [1,
-## 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...].</code></pre>
-<pre><code>## Warning: Expected 3 pieces. Missing pieces filled with `NA` in 72 rows
-## [16669, 78274, 81646, 87343, 105715, 114724, 116976, 121256, 125652,
-## 203326, 329345, 337640, 348940, 441730, 470883, 501359, 504527, 546434,
-## 580744, 597615, ...].</code></pre>
-<pre><code>## Warning in evalq(as.integer(index), &lt;environment&gt;): NAs introduced by
-## coercion</code></pre>
 <pre class="r"><code>analysis_adj = analysis %&gt;%
    mutate(month = str_replace(month, &quot;3&quot;, &quot;Spring&quot;),
           month = str_replace(month, &quot;4&quot;, &quot;Spring&quot;),
@@ -265,18 +264,17 @@ $(document).ready(function () {
           month = str_replace(month, &quot;2&quot;, &quot;Winter&quot;),
           month = fct_relevel(month, &quot;Spring&quot;))</code></pre>
 <pre class="r"><code>analysis %&gt;%
-  group_by(hour,city) %&gt;%
-  summarize(n= n()) %&gt;%
-ggplot(aes(x = hour, y = n, color = city))+
-  geom_line()</code></pre>
+  group_by(hour, city) %&gt;%
+  summarize(n = n()) %&gt;%
+  ggplot(aes(x = hour, y = n, color = city)) +
+  geom_line() +
+  labs(title = &quot;Number of Fire incident according to hours&quot;) +
+    theme(panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(), 
+          axis.line = element_line(colour = &quot;black&quot;))</code></pre>
 <pre><code>## Warning: Removed 5 rows containing missing values (geom_path).</code></pre>
-<p><img src="fire_plot_according_to_hour_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<pre class="r"><code>  labs(title = &quot;Number of Fire incident according to hours&quot;)</code></pre>
-<pre><code>## $title
-## [1] &quot;Number of Fire incident according to hours&quot;
-## 
-## attr(,&quot;class&quot;)
-## [1] &quot;labels&quot;</code></pre>
+<p><img src="fire_plot_according_to_hour_files/figure-html/plot-1.png" width="672" /></p>
 
 
 

@@ -2,8 +2,9 @@
 title: "true_fire_alarm_time_location"
 author: lz2657
 date: Nov.30, 2018
-output: html_document
+output: github_document
 ---
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(RSocrata)
