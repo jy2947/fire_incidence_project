@@ -97,7 +97,7 @@ In order to visualize areas where fire alarms happens the most and areas where f
 
 <img src="./fire_map_files/figure-html/graphs_together_manha-1.png" style="width:100%" >
 
-In manhattan, it seems fire alarms happens the most at upper west side, morningside heights, east harlem, lower east side and east villiage, regardless of the alarm type - be it a service request to the fire department or the place really caught on fire. The places in the most north part in manhattan, the most south part as well as upper east side have relatively fewer fire alarms and true fire cases.      
+In manhattan, it seems fire alarms happens the most at upper west side, morningside heights, east harlem, lower east side and east village, regardless of the alarm type - regardless of whether there’s really fire. While inwood, tribeca and upper east side have relatively fewer fire alarms and true fire cases have relatively fewer fire alarms and true fire cases.      
 ```{r graphs_together_manha}
 fire_manha + all_alarm_manha
 ```
