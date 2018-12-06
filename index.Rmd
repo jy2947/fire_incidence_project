@@ -22,6 +22,10 @@ Someone began wondering - how often do incidents like this happen in NYC?
 
 # Data Sources
 
-**Data source URL: <https://data.cityofnewyork.us/Public-Safety/Incidents-Responded-to-by-Fire-Companies/tm6d-hbzd>**
+**[Original Data](https://data.cityofnewyork.us/Public-Safety/Incidents-Responded-to-by-Fire-Companies/tm6d-hbzd)**
 
 Data is provided by the Fire Department of New York City (FDNY), and last updated by 09/10/2018. Though the New York Fire Incident Reporting System (NYFIRS) was designed specifically to understand the nature and causes of fire, it has been expanded to collect basic information on all incidents.
+
+# Screencast
+
+**[Project Screencast](https://www.youtube.com/watch?v=wWMNvkS9in4&t=39s)**
