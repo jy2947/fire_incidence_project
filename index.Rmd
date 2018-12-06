@@ -6,7 +6,7 @@ date: "December, 2018"
 
 <img src="images/FDNY_LEGO2.jpg" style="width:100%">
 
-# Moitivation
+# Motivation
 
 The story starts on a peaceful weekend night, 100 Haven Avenue, Tower 3.
 

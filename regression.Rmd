@@ -36,7 +36,8 @@ reg_prep =
            if_else(month %in% c("Dec", "Jan", "Feb"), "winter", 
                    if_else(month %in% c("Mar", "Apr", "May"), "spring", 
                            if_else(month %in% c("Jun", "Jul", "Aug"), "summer", "autumn"))), 
-         season = as.factor(season)) %>% 
+         season = as.factor(season), 
+         season = fct_relevel(season, c("summer", "autumn", "spring", "winter"))) %>% 
   #clean zip code, exclude unreasonable zip codes
   mutate(zip_code = str_sub(zip_code, 1, 5)) %>% 
   filter(zip_code != "" & zip_code != "99999" & 
@@ -65,7 +66,7 @@ broom::tidy(fit) %>%
 ```
 
 
-The model shows that population in an area is highly associated with the number of fire cases. In a given season, when average population increases by 1000, there will be one more true fire cases in an area. Also in summer there seems to be an average of 8 less true fire cases than in the autumn.  
+The model shows that population in an area is highly associated with the number of fire cases. In a given season, when average population increases by 1000, there will be one more true fire cases in an area. Also in summer there seems to be an average of 8 less true fire cases than in other seasons, which is consistent with our previous exploratory analysis.  
 
 
-If you are finding a place to live in New York City and you would like to live in a place that is least likely to caught on fire, we would suggest to live in a less populated area.  
+If you are finding a place to live in New York City and you would like to live in a place that is least likely to caught on fire, we would suggest to live in a less populated area. And also one should be careful on seasons other than summer.   

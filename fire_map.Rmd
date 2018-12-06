@@ -101,7 +101,7 @@ In manhattan, it seems fire alarms happens the most at upper west side, mornings
 ```{r graphs_together_manha}
 fire_manha + all_alarm_manha
 ```
-
+  
 <img src="./fire_map_files/figure-html/garphs_toge_all_ny-1.png" style="width:100%" >
 
 In New York City, queens seems to be a place with less fire alarms and true fire case. But if you live in Brooklyn, you'd better be more careful and avoid being caught in fire.  

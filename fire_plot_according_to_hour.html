@@ -211,7 +211,7 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="https://github.com/jy2947/fire_incidence_project">Shiny</a>
+  <a href="https://lz2657.shinyapps.io/shiny/">Shiny</a>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -248,7 +248,8 @@ $(document).ready(function () {
 ## [16669, 78274, 81646, 87343, 105715, 114724, 116976, 121256, 125652,
 ## 203326, 329345, 337640, 348940, 441730, 470883, 501359, 504527, 546434,
 ## 580744, 597615, ...].</code></pre>
-<pre><code>## Warning in evalq(as.integer(index), &lt;environment&gt;): 强制改变过程中产生了NA</code></pre>
+<pre><code>## Warning in evalq(as.integer(index), &lt;environment&gt;): NAs introduced by
+## coercion</code></pre>
 <pre class="r"><code>analysis_adj = analysis %&gt;%
    mutate(month = str_replace(month, &quot;3&quot;, &quot;Spring&quot;),
           month = str_replace(month, &quot;4&quot;, &quot;Spring&quot;),
