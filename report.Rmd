@@ -17,8 +17,8 @@ Jiawei Ye (jy2947), Yuxin Yang (yy2926), Ruoyu Ji (rj2543), Lingyu Zhang (lz2657
 
 ### Motivation and related work:
 Since all our team members live on campus and are disturbed by fire alarms time to time. And always, no true fire alarm happens. We began to wonder that how often do incidents like this happen in NYC.
-We noticed that in the examples  drawn from submissions in the Fall of 2017, there is one called â€œFactors Associated with Vehicle Accidents in New York City from 2014 to 2016â€?. This one made a great integration of techniques we have learned from Data Science class (i.e., including Shiny, linear model, interactivity and EDA).
-We were inspired and finally found the available data called â€œIncidents Responded to by Fire Companiesâ€? on NYC Open Data. The original data covers description, borough, zip code and specific time period related to certain fire incidents.
+We noticed that in the examples  drawn from submissions in the Fall of 2017, there is one called â€œFactors Associated with Vehicle Accidents in New York City from 2014 to 2016. This one made a great integration of techniques we have learned from Data Science class (i.e., including Shiny, linear model, interactivity and EDA).
+We were inspired and finally found the available data called â€œIncidents Responded to by Fire Companies on NYC Open Data. The original data covers description, borough, zip code and specific time period related to certain fire incidents.
 
 ### Initial questions and evolution:
 Despite variables that are directly related to fire incidents (such as incident description), we tried to explore linkages between the frequency of fire incidents and other potential causal factors.
@@ -62,7 +62,7 @@ Despite the comprehensive information offered by the data set, we only selected 
 
 We broke down the `incident_date_time` variable to obtain the year, month and hour when an incident happened, and further created a `season` variable by month. 
 
-We broke down the `incident_type_desc` variable to obtain a three-digits code for each description of the incident, and a character variable for the description. The descriptions were classified as ¡°fire alarm with fire¡±, ¡°fire alarm without fire¡± and ¡°service request¡± according to the descriptions. 
+We broke down the `incident_type_desc` variable to obtain a three-digits code for each description of the incident, and a character variable for the description. The descriptions were classified as "fire alarm with fire", "fire alarm without fire" and "service request" according to the descriptions. 
 
 We broke down the `borough_desc` variable to obtain a character variable with the boroughs' name. 
 
