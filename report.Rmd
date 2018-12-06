@@ -379,7 +379,7 @@ broom::tidy(fit) %>%
 <img src="./fire_factors_files/figure-html/plots-3.png" style="width:100%" >
 
 * Hovering the mouse on different lines, it is clear that cooking fire and fire related to outside rubbish happen the most during evening, while other contributing factors seem to be evenly distributed in different hours of a day.  
-```{r gglotly}
+```{r gglotly, echo = FALSE}
 ggplotly(cause_hour_plot)
 ```
 
@@ -394,7 +394,7 @@ ggplotly(cause_hour_plot)
 ![nyc_map](plot_8.png)
 
 * We found that the number of true fire incidences had highly significant positive association with population, and in summer there was an average of 8 less true fire cases than in other seasons. 
-![regression](/plot_9.png)
+![regression](plot_9.png)
 
 ##Discussion
 
