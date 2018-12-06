@@ -102,3 +102,78 @@ dupli_with %>%
   arrange(desc(count)) %>% View()
 ```
 
+```{r explore_asso_season_cause}
+asso_sea_cause = 
+  with_detail %>% 
+  select(incident_date_time, incident_type_desc, 
+         property_use_desc, zip_code, borough_desc) %>% 
+  #get a clean borough variable
+  separate(borough_desc, sep = "- ", into = c("n", "borough")) %>% 
+  select(-n) %>% 
+  #make it easier to filter true fire alarms
+  separate(incident_type_desc, into = c("incident_type", "incident_desc"), sep = "- ") %>%
+  mutate(incident_type = str_sub(incident_type, 1, 3),
+         incident_type = as.integer(incident_type)) %>% 
+  #clean year and month
+  mutate(month = as.factor(month.abb[as.integer(substr(incident_date_time, 6, 7))]),
+         month = fct_relevel(month, "Jan", "Feb", "Mar", "Apr", "May", 
+                             "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"), 
+         year = str_sub(incident_date_time, 1, 4)) %>% 
+  #get a season variable. I can't believe I'm using this ugly if_else
+  mutate(season = 
+           if_else(month %in% c("Dec", "Jan", "Feb"), "winter", 
+                   if_else(month %in% c("Mar", "Apr", "May"), "spring", 
+                           if_else(month %in% c("Jun", "Jul", "Aug"), "summer", "autumn"))), 
+         season = as.factor(season), 
+         season = fct_relevel(season, c("summer", "autumn", "spring", "winter"))) %>% 
+  #clean zip code, exclude unreasonable zip codes
+  mutate(zip_code = str_sub(zip_code, 1, 5)) %>% 
+  filter(zip_code != "" & zip_code != "99999" & 
+         zip_code != "10691" & zip_code != "11251", 
+         incident_type < 165)
+
+##how many observations without zipcode
+with_detail %>% 
+  group_by(zip_code) %>% 
+  summarize(count = n()) %>% 
+  arrange(desc(count))
+
+##The most frequent cause in each season
+asso_sea_cause %>% 
+  filter(season == "summer") %>%
+#  summarise(n = n()) %>% 
+  group_by(incident_desc) %>% 
+  summarise(count = n()) %>% 
+  arrange(desc(count)) %>% 
+  mutate(percentage = round(count /  39494, digits = 4))
+asso_sea_cause %>% 
+  filter(season == "winter") %>% 
+#  summarize(n = n())
+  group_by(incident_desc) %>% 
+  summarise(count = n()) %>% 
+  arrange(desc(count)) %>% 
+  mutate(percentage = round(count /  46800, digits = 4))
+asso_sea_cause %>% 
+  filter(season == "spring") %>%
+#    summarize(n = n())
+  group_by(incident_desc) %>% 
+  summarise(count = n()) %>% 
+  arrange(desc(count)) %>% 
+    mutate(percentage = round(count /  47097, digits = 4))
+asso_sea_cause %>% 
+  filter(season == "autumn") %>% 
+  #summarize(n = n())
+  group_by(incident_desc) %>% 
+  summarise(count = n()) %>% 
+  arrange(desc(count)) %>% 
+  mutate(percentage = round(count /  44447, digits = 4))
+
+asso_sea_cause %>% 
+  group_by(season, property_use_desc) %>% 
+  summarize(count = n()) %>% 
+  arrange(desc(count)) %>% 
+  mutate(percentage = round(if_else(season == "summer", count/39494, 
+                              if_else(season == "winter", count/46800, 
+                                      if_else(season == "spring", count/47097, count/44447))) ,digits = 2))
+```
+
