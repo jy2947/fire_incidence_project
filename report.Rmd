@@ -6,9 +6,10 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(plotly)
 ```
 
-Report
+#Report
 
 ##Introduction
 
@@ -179,6 +180,83 @@ fire_factor %>%
        caption = "Data provided by Fire Department of New York City (FDNY)")
 ```
 
+
+We next take the time of a year and hour of the day into account, and only consider the two most frequent contributing factors. We used the code below to obtain graphs. 
+
+```{r factor_time}
+asso_sea_cause = 
+  with_detail %>% 
+  select(incident_date_time, incident_type_desc, 
+         property_use_desc, zip_code, borough_desc) %>% 
+  separate(borough_desc, sep = "- ", into = c("n", "borough")) %>% 
+  select(-n) %>% 
+  separate(incident_type_desc, into = c("incident_type", "incident_desc"), sep = "- ") %>%
+  mutate(incident_type = str_sub(incident_type, 1, 3),
+         incident_type = as.integer(incident_type)) %>% 
+  mutate(month = as.factor(month.abb[as.integer(substr(incident_date_time, 6, 7))]),
+         month = fct_relevel(month, "Jan", "Feb", "Mar", "Apr", "May", 
+                             "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"), 
+         year = str_sub(incident_date_time, 1, 4)) %>% 
+  filter(zip_code != "" & zip_code != "99999" & 
+         zip_code != "10691" & zip_code != "11251", 
+         incident_type < 165) %>% 
+  mutate(hour = str_sub(incident_date_time, 12, 13), 
+         hour = as.integer(hour)) %>%
+  separate(property_use_desc, sep = "- ", into = c("n", "property_use_desc")) %>% 
+  select(-n)
+
+cause_hour_plot = 
+  asso_sea_cause %>% 
+  group_by(hour, incident_desc) %>% 
+  summarize(count = n()) %>% 
+  arrange(desc(count)) %>% 
+  ggplot(aes(x = hour, y = count)) +
+  geom_line(aes(color = incident_desc))+ 
+  theme_classic() +
+  theme(legend.position = "none") +
+  labs(title = "Frequency for Contributing Factors of True Fire Alarm in Each Hour",
+       x = "Time",
+       y = "Frequency",
+       caption = "Data provided by Fire Department of New York City (FDNY)")
+
+asso_sea_cause%>% 
+  drop_na(month) %>% 
+  filter(incident_type %in% c(113, 151)) %>% 
+  group_by(month, incident_desc) %>%   
+  summarize(count = n()) %>% 
+  arrange(desc(count)) %>% 
+  ggplot(aes(x = month, y = count)) +
+  geom_col(aes(fill = incident_desc)) +
+  theme_classic() +
+  theme(legend.position = "none") +
+  labs(title = "Frequency for Contributing Factors of True Fire Alarm in Each Month",
+       x = "Month",
+       y = "Frequency",
+       caption = "Data provided by Fire Department of New York City (FDNY)") +
+  facet_wrap(~ incident_desc) 
+```
+
+We also explored the association with different property use of true fire incidents and the months in the year using the following code:
+
+```{r prop_time}
+asso_sea_cause%>% 
+  drop_na(month) %>% 
+  filter(incident_type %in% c(113, 151)) %>% 
+  group_by(month, incident_desc) %>%   
+  summarize(count = n()) %>% 
+  arrange(desc(count)) %>% 
+  ggplot(aes(x = month, y = count)) +
+  geom_col(aes(fill = incident_desc)) +
+  theme_classic() +
+  theme(legend.position = "none") +
+  labs(title = "Frequency for Contributing Factors of True Fire Alarm in Each Month",
+       x = "Month",
+       y = "Frequency",
+       caption = "Data provided by Fire Department of New York City (FDNY)") +
+  facet_wrap(~ incident_desc) 
+```
+
+
 We were also interested in the distribution of true fire incidents in different area. We found a package called `zipcode` which has longitude and latitude coordinates of each zip code, and tried to plot every fire alarm cases on the map by adding random numbers to each fire alarm cases using the following code: 
 
 ```{r zip_coordinate}
@@ -229,7 +307,7 @@ zip_choropleth(zip_map_data_for_map,
 Apart from the visualization methods described above, we made a shiny dashboard to visualize the distribution of true fire cases in different season, time of a day, and borough. The link of it is https://lz2657.shinyapps.io/shiny/
 
 ####Statistical analysis
-We build a regression model on the number of true fire incidents against the population and season in each zip code area. Population was considered as a continuous variable and season as a categorical variable. Summer was used as the reference variable since exploratory analysis showed there's less fire in summer than in other seasons. 
+Since our population data was for 2012, we pulled out the true fire incidents observations in 2013 to get a closer match for statistical analysis.We build a regression model on the number of true fire incidents against the population and season in each zip code area. Population was considered as a continuous variable and season as a categorical variable. Summer was used as the reference variable since exploratory analysis showed there's less fire in summer than in other seasons. 
 
 ```{r regression, warning = FALSE}
 reg_prep = 
@@ -296,6 +374,19 @@ broom::tidy(fit) %>%
 
 ![factor_barplot](plot_6.png)
 
+* We found that in summer months, there's less fire incidents related to cooking and in winter months, there's less fire incidents related to outside rubbish. 
+
+<img src="./fire_factors_files/figure-html/plots-3.png" style="width:100%" >
+
+* Hovering the mouse on different lines, it is clear that cooking fire and fire related to outside rubbish happen the most during evening, while other contributing factors seem to be evenly distributed in different hours of a day.  
+```{r gglotly}
+ggplotly(cause_hour_plot)
+```
+
+* We found that the top two property use of ture fire alarms are multifamily dwelling and 1 or 2 family dwelling. The plot shows that in summer times, true fire incidents declines in multifamily dwelling places. 
+
+<img src="./fire_factors_files/figure-html/plots-2.png" style="width:100%" >
+
 * We found that in Manhattan, fire alarms happens the most at upper west side, morningside heights, east harlem, lower east side and east village, regardless of whether there's really fire. While inwood, tribeca and upper east side have relatively fewer fire alarms and true fire cases.
 ![mht_map](plot_7.png)
 
@@ -305,13 +396,16 @@ broom::tidy(fit) %>%
 * We found that the number of true fire incidences had highly significant positive association with population, and in summer there was an average of 8 less true fire cases than in other seasons. 
 ![regression](/plot_9.png)
 
-##Conclusion
-We find that the fire incident numbers are primarily related with population and season in New York City. This conclusion is precisely what we expected. Our inference on the relationship between climate and total fire incidents number is based on the assumption that change climate or the temperature not changing with respect to month.  However, this is not accurate for that the temperature varies distinctively in one month. If we make more profound mining into the dataset, we can combine our data with climate data to develop a more factual result concerning the relationship.
-
 ##Discussion
+
+We find that the true fire incident numbers are primarily related with population and season in New York City. This conclusion is not precisely what we expected, but is a reasonable finding. The association between number of true fire incidents with season might be attributed to the decrease of fire in multifamily dwelling and less cooking fire in the summer. 
+
+Another possible reason of decreasing trend of true fire incidents in the summer is that there is an association between climate and total fire incidents number. This is based on the assumption that change climate or the temperature was not changing with respect to month. However, this is not accurate for that the temperature varies distinctively in one month. If we make more profound mining into the dataset, we can combine our data with climate data to develop a more factual result concerning the relationship.
+
+
 ##Acknowledgements
 We thank ourselves for finishing everything.  
 
-We thank Prof Jin for delaying the due date of homework 10 to Dec. 10. 
+We thank Prof Jin for delaying the due date of homework 10 to Dec. 10.  
 
-We thank Ari Lamstein for developing the package `choroplethrZip` so that we can create maps using zip code. 
+We thank Ari Lamstein for developing the package `choroplethrZip` so that we can create maps using zip code.  
