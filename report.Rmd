@@ -136,6 +136,7 @@ ggplot(true_fire_month, aes(x = month_origin, y = n, color = borough_desc, group
           axis.line = element_line(colour = "black"))
 
 true_fire_hour = fire_data %>%
+  filter(incident_type < 165) %>%
   group_by(hour, city) %>%
   summarize(n = n())
 
