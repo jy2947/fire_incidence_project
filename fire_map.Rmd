@@ -4,6 +4,7 @@ title: "Fire alarm distribution in New York"
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(include = FALSE, warning = FALSE)
+devtools::install_github('arilamstein/choroplethrZip@v1.3.0')
 library(RSocrata)
 library(tidyverse)
 library(choroplethrZip)
