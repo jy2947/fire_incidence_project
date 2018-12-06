@@ -34,7 +34,7 @@ During the process of mapping, we somehow found that the population heat map was
 
 Our main dataset is obtained from New York City open data website in this [link]( https://data.cityofnewyork.us/Public-Safety/Incidents-Responded-to-by-Fire-Companies/tm6d-hbzd). Although you can download the file, we suggest you not to - it is too big to be fully displayed in excel. Instead you can use the following the code to access the data. Depending on the speed of the computer, the time needed to load the data can take 2 - 30 minutes. 
 
-```{r load, cache = TRUE}
+```{r load}
 library(RSocrata)
 with_detail = read.socrata("https://data.cityofnewyork.us/resource/ibte-hq4u.csv")
 ```
@@ -94,7 +94,8 @@ fire_data = with_detail %>%
          month = str_replace(month, "12", "Winter"),
          month = str_replace(month, "1", "Winter"),
          month = str_replace(month, "2", "Winter"),
-         month = fct_relevel(month, "Spring"))
+         month = fct_relevel(month, "Spring")) %>% 
+  drop_na(month, hour)
 ```
 
 For the dataset containing the population in each zip code area in the US, we used the following code to obtain the population only in New York City. 
