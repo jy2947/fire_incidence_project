@@ -16,6 +16,21 @@ fire_data = with_detail %>%
   filter(incident_type < 165) %>%
   select(-incident_type_desc, -incident_date_time, -incident_type)
 
+fire_data = fire_data %>%
+  mutate(month = str_replace(month, "3", "Spring"),
+         month = str_replace(month, "4", "Spring"),
+         month = str_replace(month, "5", "Spring"),
+         month = str_replace(month, "6", "Summer"),
+         month = str_replace(month, "7", "Summer"),
+         month = str_replace(month, "8", "Summer"),
+         month = str_replace(month, "9", "Autumn"),
+         month = str_replace(month, "10", "Autumn"),
+         month = str_replace(month, "11", "Autumn"),
+         month = str_replace(month, "12", "Winter"),
+         month = str_replace(month, "1", "Winter"),
+         month = str_replace(month, "2", "Winter"),
+         month = fct_relevel(month, "Spring"))
+
 
 zip_map_data = fire_data %>% 
   mutate(zip_code = str_sub(zip_code, 1, 5)) %>% 
