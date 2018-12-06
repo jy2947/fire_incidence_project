@@ -26,7 +26,11 @@ true_fire = with_detail %>%
 
   ggplot(true_fire, aes(x = month, y = n, color = borough_desc, group = borough_desc)) + 
     geom_line() +
-    labs(title = "Number of True Fire Alarm in Each Borough")
+    labs(title = "Number of True Fire Alarm in Each Borough") +
+    theme(panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(), 
+          axis.line = element_line(colour = "black"))
 ```
 
 
